@@ -1,4 +1,3 @@
-package com.toolbox;
 public class toolbox {
     public static void print(String sentString) {
         System.out.print(sentString);
