@@ -31,7 +31,7 @@ Homework:
 
 To compare strings use `string.equals("otherstring")`
 
-```
+```java
 int x = 5;
 double y = 10.2;
 boolean = true;
@@ -49,7 +49,7 @@ Key concepts:
 Homework:
 * install Java at home
 
-```
+```java
 length()
 charAt()
 toUpperCase()
