@@ -6,7 +6,7 @@ public class NameGuess {
         Scanner kb = new Scanner(System.in);
         boolean gamerunning = true;
         while (gamerunning) {
-            String [] names = {"mark zuckerburg", "elon musk", "bill gates", "tim cook", "steve jobs"};
+            String [] names = {"mark zuckerburg", "elon musk", "bill gates", "tim cook", "steve jobs", };
             int random = (int)(Math.random() * names.length);
             String clean = names[random];
             String obfuscater = "--" + names[random].substring(2, clean.length()-3) + "---";
