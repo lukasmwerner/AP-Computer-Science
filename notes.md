@@ -1,11 +1,14 @@
 # AP Computer Science Notes
 
+Lukas Werner
+
 ## Table of contents
 
 1. Important notes
 2. Hello World (9/5/19)
 3. Password Program (9/6/19)
 4. String Methods (9/9/19)
+5. Further String Methods (9/12/19)
 
 ## Important notes
 
@@ -58,4 +61,65 @@ substring()
 indexOf()
 equails()
 compareTo()
+```
+
+## Further String Methods (9/12/19)
+
+Key Concepts:
+
+1. Substring  <- used quite a lot
+2. compareTo() <- not used much
+3. Escape characters
+4. String concatenation
+
+Homework:
+
+1. Install java at home
+
+### Notes:
+
+#### Substring
+
+```java
+String word = "eggplant";
+word.substring(3) -> "plant"
+word.substring(0,3) -> "egg"
+word.substring(5,6) -> "a"
+
+word.substring(3,7) -> "plan"
+word.substring(5) -> "ant"
+
+```
+
+#### Compare To:
+
+``` java
+String word2 = "grape";
+
+word.compareTo(word2) -> -2
+  5      -      7
+word2.compareTo(word) -> 2
+  7      -      5
+```
+
+#### Escape Character
+
+Character | returnType |
+--- | --- |
+\n | new line
+\t | tab
+\\" | "
+
+```java
+System.out.println("a");
+```
+
+#### String Concatenation
+
+Combinding a bunch of strings together
+
+```java
+String word3 = "orange";
+
+String words = word + "," + word2 + "," + word3;
 ```
