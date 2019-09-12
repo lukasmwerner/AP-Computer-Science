@@ -120,6 +120,6 @@ Combinding a bunch of strings together
 
 ```java
 String word3 = "orange";
-
 String words = word + "," + word2 + "," + word3;
 ```
+
