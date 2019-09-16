@@ -123,3 +123,46 @@ String word3 = "orange";
 String words = word + "," + word2 + "," + word3;
 ```
 
+
+## Flow Control (9.16.19)
+
+#### Flow Control
+
+* if
+* while
+* for
+
+IF Statements
+
+```java
+if (condition) {
+  codeblock
+} 
+else if (condition) {
+  codeblock
+}
+else {
+  codeblock
+}
+```
+
+While loops
+
+```java
+while (conditon) {
+  codeblock 
+  int z = 3; <- z only exists inside the loop
+}
+printf(z); <- error
+```
+For loops
+
+```java
+for (int i = 0; i < 5; i++) {
+  codeblock
+}
+```
+`i` loop variable, next is our conditon, and finally is the update
+
+loops though `0, 1, 2, 3, 4`
+
