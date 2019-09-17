@@ -166,3 +166,37 @@ for (int i = 0; i < 5; i++) {
 
 loops though `0, 1, 2, 3, 4`
 
+### Loops and random stuff 
+
+```java
+
+Math.random()    <-returns double
+0 <= r <1  <- random number between 0-1
+
+Math.random() * 10    <- returns double
+0 <= r <10 <- random integer between 0-10
+
+(int)(Math.random()*10) <- casts to an int
+```
+Create a random number between two numbers
+
+```java
+(11 - 12)
+
+(int)(Math.random()*2) + 11
+
+(2 - 8)
+
+(int)(Math.random()*7) + 2
+
+(0 - 99)
+
+(int)(Math.random()*100)
+
+```
+
+Random numbers first inclusive, last exclusive
+
+```java
+
+```
