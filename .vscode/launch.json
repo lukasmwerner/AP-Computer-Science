@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - GuessMyNumber",
+            "request": "launch",
+            "mainClass": "GuessMyNumber",
+            "projectName": "AP-Computer-Science_8986052e"
+        },
+        {
+            "type": "java",
             "name": "Debug (Launch) - Current File",
             "request": "launch",
             "mainClass": "${file}"
