@@ -5,16 +5,28 @@ public class AddingQuiz {
         Scanner kb = new Scanner(System.in);
         boolean gameRunning = true;
 
-        int userInput = Integer.parseInt(kb.nextLine());
-        int firstRandom = (int)(Math.random())+1;
-        int seccondRandom = (int)(Math.random())+1;
-
         while (gameRunning) {
-            printf("what is "+firstRandom+"+"+seccondRandom+"? ");
-            int awnser = firstRandom + seccondRandom;
-            if (awnser == userInput) {
-                
+            boolean wrong = true;
+            int firstRandom = (int)(Math.random()*100)+1;
+            int seccondRandom = (int)(Math.random()*100)+1;
+            while (wrong) {
+                printf("what is "+firstRandom+"+"+seccondRandom+"? ");
+                int userInput = Integer.parseInt(kb.nextLine());
+                int awnser = firstRandom + seccondRandom;
+                if (awnser == userInput) {
+                    printf("You got it right");
+                    wrong = false;
+                }
+                else if (awnser >= userInput) {
+                    printf("You got it wrong, try again");
+                    wrong = true;
+                }
+                else if (awnser <= userInput) {
+                    printf("You got it wrong, try again");
+                    wrong = true;
+                }
             }
+            printf("next round!");
         }
     }
 
