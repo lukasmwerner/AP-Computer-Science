@@ -10,7 +10,7 @@ public class GuessMyNumber {
         int random = 0;
         while (gameRunning) {
             if (!wrong) {
-                random = (int)(Math.random() * difficulty) + 1;
+                random = (int) (Math.random() * difficulty) + 1;
                 printf("New round!");
             }
 
@@ -19,16 +19,13 @@ public class GuessMyNumber {
             if (input > random) {
                 printf("You're too high!");
                 wrong = true;
-            }
-            else if (input < random) {
+            } else if (input < random) {
                 printf("You're too low!");
                 wrong = true;
             } else if (input == random) {
                 printf("You got it right!");
                 wrong = false;
             }
-
-
 
         }
 
@@ -38,6 +35,7 @@ public class GuessMyNumber {
     public static void print(String sentString) {
         System.out.print(sentString);
     }
+
     public static void printf(String sentString) {
         System.out.println(sentString);
     }
