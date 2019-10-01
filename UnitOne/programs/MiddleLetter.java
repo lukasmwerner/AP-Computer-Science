@@ -1,4 +1,5 @@
 import java.util.Scanner;
+
 public class MiddleLetter {
 
     public static void main(String[] args) {
@@ -7,12 +8,12 @@ public class MiddleLetter {
         String input = kb.nextLine();
 
         int length = input.length();
-        int midpoint = length/2;
-        char middleChar = input.charAt(length/2);
+        int midpoint = length / 2;
+        char middleChar = input.charAt(length / 2);
         printf("Middle Char: " + middleChar);
 
         String before = input.substring(0, midpoint);
-        String after = input.substring(midpoint+1, length);
+        String after = input.substring(midpoint + 1, length);
 
         printf(before + Character.toUpperCase(middleChar) + after);
 
@@ -21,6 +22,7 @@ public class MiddleLetter {
     public static void print(String sentString) {
         System.out.print(sentString);
     }
+
     public static void printf(String sentString) {
         System.out.println(sentString);
     }
