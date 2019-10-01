@@ -24,8 +24,7 @@ public class FlowControl {
     }
     if (y > 5) {
       System.out.println("3b. " + true);
-    }
-    else {
+    } else {
       System.out.println("3c. " + false);
     }
 
@@ -35,8 +34,7 @@ public class FlowControl {
       if (y > 0) {
         System.out.println("4b. " + T);
       }
-    }
-    else {
+    } else {
       System.out.println("4c. " + F);
     }
 
@@ -45,8 +43,7 @@ public class FlowControl {
       System.out.println("5a. " + T);
       if (y < 0) {
         System.out.println("5b. " + T);
-      }
-      else {
+      } else {
         System.out.println("5c. " + F);
       }
     }
@@ -54,8 +51,7 @@ public class FlowControl {
     // #6
     if (x == 3 || y / 0 > 0) {
       System.out.println("6a. " + T);
-    }
-    else {
+    } else {
       System.out.println("6b. " + F);
     }
 
@@ -65,8 +61,7 @@ public class FlowControl {
       if (y / 0 > 0) {
         System.out.println("7b. " + T);
       }
-    }
-    else {
+    } else {
       System.out.println("7c. " + F);
     }
 

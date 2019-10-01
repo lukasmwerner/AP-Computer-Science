@@ -5,7 +5,6 @@ Lukas Werner 9/6/19
 
 import java.util.Scanner;
 
-
 public class Password {
 
     public static void main(String[] args) {
@@ -24,12 +23,12 @@ public class Password {
                 } else {
                     System.out.println("You got it wrong!");
                 } // end password compare
-                
+
             } else {
                 System.out.println("You got it wrong!");
-            } //end of username compare
+            } // end of username compare
         } // end of loop
-            
+
     } // end of function main
 
 }

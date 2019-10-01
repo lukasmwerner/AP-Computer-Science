@@ -27,7 +27,6 @@ public class Conditionals {
       grade = "F";
     System.out.println("Option 1 grade = " + grade);
 
-
     /* Option 2 : else if statements */
     grade = "";
     if (score >= 90)
@@ -39,7 +38,6 @@ public class Conditionals {
     else
       grade = "F";
     System.out.println("Option 2 grade = " + grade);
-
 
     /* Option 3 : if statements in 'reverse' */
     grade = "";
@@ -68,7 +66,6 @@ public class Conditionals {
       }
     }
     System.out.println("Option 4 grade = " + grade);
-
 
     /* Option 5 : compound if statements */
     grade = "";
