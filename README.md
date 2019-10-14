@@ -5,6 +5,7 @@ Contains all the code from my AP Computer Sci Class
 Lukas Werner
 
 ### Project Structure
+```
 ├── UnitOne
 │   ├── HW
 │   │   ├── Conditionals.java
@@ -45,3 +46,4 @@ Lukas Werner
 │       └── Drawing.java
 ├── notes.md
 └── scratchpaper.md
+```
