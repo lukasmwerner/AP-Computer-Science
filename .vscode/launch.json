@@ -6,10 +6,9 @@
     "configurations": [
         {
             "type": "java",
-            "name": "CodeLens (Launch) - GuessMyNumber",
+            "name": "CodeLens (Launch) - Conditionals",
             "request": "launch",
-            "mainClass": "GuessMyNumber",
-            "projectName": "AP-Computer-Science_8986052e"
+            "mainClass": "Conditionals"
         },
         {
             "type": "java",
@@ -19,15 +18,9 @@
         },
         {
             "type": "java",
-            "name": "Debug (Launch)-HelloWorld",
+            "name": "Debug (Launch)-Adventure",
             "request": "launch",
-            "mainClass": "HelloWorld"
-        },
-        {
-            "type": "java",
-            "name": "Debug (Launch)-Password",
-            "request": "launch",
-            "mainClass": "Password"
+            "mainClass": "Adventure"
         }
     ]
 }

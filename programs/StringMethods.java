@@ -16,27 +16,28 @@ public class StringMethods {
         printo("The string in uppercase: " + upper);
 
         boolean contains = input.contains("at");
-        printo("The string contains \"at\": "+ contains);
+        printo("The string contains \"at\": " + contains);
 
         String sub1 = input.substring(2);
-        printo("The substring starting at index 2 is: "+ sub1);
+        printo("The substring starting at index 2 is: " + sub1);
 
-        String sub2 = input.substring(1,3);
-        printo("The substring between index 1 and 3 is: "+ sub2);
+        String sub2 = input.substring(1, 3);
+        printo("The substring between index 1 and 3 is: " + sub2);
 
         int index = input.indexOf("at");
-        printo("\"At\" occurs at the index: "+ index);
+        printo("\"At\" occurs at the index: " + index);
 
         boolean isEqual = input.equals("cat");
-        printo("Is your string equal to \"cat\"? "+ isEqual);
+        printo("Is your string equal to \"cat\"? " + isEqual);
 
         int distance = input.compareTo("cat");
-        printo("Your string and \"cat\" are apart by: "+ distance);
+        printo("Your string and \"cat\" are apart by: " + distance);
     }
 
     public static void prints(String text) {
         System.out.print(text);
     }
+
     public static void printo(String text) {
         System.out.println(text);
     }

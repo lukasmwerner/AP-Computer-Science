@@ -9,23 +9,21 @@ public class Loops {
       System.out.println(j);
     }
 
-
-    /* fix #2 so it successfully counts the number of heads (0) flipped in a row
-       it should break the loop when a tails (1) is flipped */
+    /*
+     * fix #2 so it successfully counts the number of heads (0) flipped in a row it
+     * should break the loop when a tails (1) is flipped
+     */
 
     System.out.println("How many heads can you flip in a row?");
-
-    
 
     int count = 0;
 
     while (true) {
-      int coin = (int)(Math.random() * 2);
+      int coin = (int) (Math.random() * 2);
       if (coin % 2 == 1) {
         System.out.println("tails");
         break;
-      }
-      else {
+      } else {
         System.out.println("heads");
         count += 1;
       }
