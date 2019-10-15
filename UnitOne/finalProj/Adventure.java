@@ -35,7 +35,7 @@ public class Adventure {
          */
 
         //generated using https://www.dcode.fr/maze-generator
-        String locationString = "  5555555555555555555\n"+
+        String locationString = "1 5555555555555555555\n"+
                                 "  5         5       5\n"+
                                 "5 555 55555 55555 5 5\n"+
                                 "5       5 5   5 5 5 5\n"+
@@ -54,7 +54,7 @@ public class Adventure {
                                 "5 5 555 555 55555 5 5\n"+
                                 "5 5       5 5   5   5\n"+
                                 "5 5 5 5555555 555 5 5\n"+
-                                "5   5 5           5 1\n"+
+                                "5   5 5           5  \n"+
                                 "5555555555555555555  ";
         int[][] playField = genMapByStr(locationString);
 
