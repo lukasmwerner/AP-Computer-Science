@@ -23,8 +23,8 @@ public class FuncPlotter extends JComponent {
         }
         int[] previousPoint = {0,0};
         g.setColor(Color.BLUE); // quadratic
-        for (int i=0; i <= 500; i+=1) {
-            int x = i;
+        for (int i=500; i >= -500; i-=1) {
+            int x = i+100;
             int y = (int)(Math.pow(i,2));
             g.drawLine(previousPoint[0], previousPoint[1], x, y);
             g.fillOval(x-2,y-2,4,4);
