@@ -11,7 +11,7 @@ public class PictureEditor {
     
     public static void main(String[] args) {
         
-        String filename = "galaxy.jpg";
+        String filename = "javapic.jpg";
         
         pic = new Picture(filename);
         System.out.println(pic.width() + "w x " + pic.height()+"h");
@@ -19,10 +19,10 @@ public class PictureEditor {
         //printPixelColors();
         //drawDarkerLine();
         //drawSquare(0,0,200);
-        //invertPic();
+        invertPic();
         greyScale(200);
         dither();
-        //invertPic();
+        invertPic();
         pic.show();
             
     }
@@ -109,7 +109,7 @@ public class PictureEditor {
         for (int x = 0; x<width; x++) {
             for (int y = 0; y<height;y++) {
                 int tempCalc = 0;
-                try {
+                
                     int current;
                     int below = 255;
                     int belowLeft = 255;
@@ -127,17 +127,35 @@ public class PictureEditor {
                     int newVal = (int)Math.ceil(current /255);
                     pic.set(x,y, new Color(newVal, newVal, newVal));
                     int error = current - newVal;
-                    tempCalc = below + error * 5/16;
-                    if (belowYN) {pic.set(x,y+1, new Color(tempCalc, tempCalc, tempCalc));}
-                    tempCalc = belowLeft + error * 3/16;
-                    if (belowLeftYN) {pic.set(x-1,y+1, new Color(tempCalc, tempCalc, tempCalc));}
-                    tempCalc = belowRight + error * 1/16;
-                    if (belowRightYN) {pic.set(x+1, y+1, new Color(tempCalc, tempCalc, tempCalc));}
-                    tempCalc = right + error * 7/16;
-                    if (rightYN) {pic.set(x+1, y, new Color(tempCalc, tempCalc, tempCalc));}
-                } catch (IllegalArgumentException e) {
-                    System.out.println(tempCalc);
-                }
+                    try {
+                        tempCalc = below + error * 5/16;
+                        if (belowYN) {pic.set(x,y+1, new Color(tempCalc, tempCalc, tempCalc));}
+                    } catch (IllegalArgumentException e) {
+                        tempCalc = 0;
+                        if (belowYN) {pic.set(x,y+1, new Color(tempCalc, tempCalc, tempCalc));}
+                    }
+                    try {
+                        tempCalc = belowLeft + error * 3/16;
+                        if (belowLeftYN) {pic.set(x-1,y+1, new Color(tempCalc, tempCalc, tempCalc));}
+                    } catch (IllegalArgumentException e) {
+                        tempCalc = 0;
+                        if (belowLeftYN) {pic.set(x-1,y+1, new Color(tempCalc, tempCalc, tempCalc));}
+                    }
+                    try {
+                        tempCalc = belowRight + error * 1/16;
+                        if (belowRightYN) {pic.set(x+1, y+1, new Color(tempCalc, tempCalc, tempCalc));}
+                    } catch (IllegalArgumentException e) {
+                        tempCalc = 0;
+                        if (belowRightYN) {pic.set(x+1, y+1, new Color(tempCalc, tempCalc, tempCalc));}
+                    }
+                    try {
+                        tempCalc = right + error * 7/16;
+                        if (rightYN) {pic.set(x+1, y, new Color(tempCalc, tempCalc, tempCalc));}
+                    } catch (IllegalArgumentException e) {
+                        tempCalc = 0;
+                        if (rightYN) {pic.set(x+1, y, new Color(tempCalc, tempCalc, tempCalc));}
+                    }
+                
             }
         }
     }
