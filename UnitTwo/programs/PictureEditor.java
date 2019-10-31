@@ -20,17 +20,24 @@ public class PictureEditor {
         //printPixelColors();
         //drawDarkerLine();
         //drawSquare(0,0,200);
-        greyScale(11);
+        greyScale(256);
         //invertPic();
-        //gaussianHell();
+        gaussianHell(1);
         //meanBlur();
-        meanBlur();
-        //ordered3x3Dither();
+        //meanBlur();
+        ordered3x3Dither();
+        //meanBlur();
         //ordered2x2Dither();
         //coloredOrdered2x2Dither();
         //floydDither();
         //invertPic();
         pic.show();
+        for (double x = -1.0; x <= 1.0; x++) {
+            for (double y = -1.0; y <=1.0; y++) {
+                System.out.print(calcGuassianStrength(x, y, 1.0) + " | ");
+            }
+            System.out.print("\n");
+        }
             
     }
     
@@ -315,9 +322,9 @@ public class PictureEditor {
                 int bottomLeft = 0;
                 int bottomCenter = 0;
                 int bottomRight = 0;
-                try {topLeft = pic.get(x-1,y-2).getRed();avg++;} catch (Exception e) {;}
-                try {topCenter = pic.get(x,y-2).getRed();avg++;} catch (Exception e) {;}
-                try {topRight = pic.get(x+1,y-2).getRed();avg++;} catch (Exception e) {;}
+                try {topLeft = pic.get(x-1,y-1).getRed();avg++;} catch (Exception e) {;}
+                try {topCenter = pic.get(x,y-1).getRed();avg++;} catch (Exception e) {;}
+                try {topRight = pic.get(x+1,y-1).getRed();avg++;} catch (Exception e) {;}
                 try {centerLeft = pic.get(x-1,y).getRed();avg++;} catch (Exception e) {;}
                 try {centerCenter = pic.get(x,y).getRed();avg++;} catch (Exception e) {;}
                 try {centerRight = pic.get(x+1, y).getRed();avg++;} catch (Exception e) {;}
@@ -334,44 +341,41 @@ public class PictureEditor {
         pic = editPic;
     }
 
-
+    public static double calcGuassianStrength(double x, double y, double strength) {
+        double res = ( 1.0/(2.0 * Math.PI * Math.pow(strength, 2.0)) * Math.exp( -( (Math.pow(x, 2.0) + Math.pow(y, 2.0) ) / ( 2.0 * Math.pow(strength, 2.0) ) ) ) );
+        return res;
+    }
     
-    public static void gaussianHell() {
+    public static void gaussianHell(double strength) {
+        Picture editPic = pic;
         int width = pic.width();
         int height = pic.height();
-        for (int ox = 3; ox<height; ox+=5) {
-            for (int oy = 3; oy<width; oy+=5) {
-                int[] values = new int[25];
-                int valPos = 0;
-                for (int cx = -2; cx<=2; cx++) {
-                    for (int cy = -2; cy<=2; cy++) {
-                        values[valPos] = pic.get(ox-cx, oy-cy).getRed();
-                        valPos++;
+
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+
+        
+                
+                double sum = 0;
+                double avg = 0;
+                int size = 40;
+                for (int ox = -size; ox <= size; ox++) {
+                    for (int oy = -size; oy <= size; oy++) {
+                        try {
+                            double color = pic.get(x-Math.abs(ox), y-Math.abs(oy)).getRed();
+                            //System.out.println(calcGuassianStrength(ox, oy, strength));
+                            double kernel = calcGuassianStrength(ox, oy, 0.5);
+                            color = color * kernel;
+                            sum += color;
+                            avg+= kernel;
+                        } catch (Exception e) {;}
+
                     }
                 }
-
-                int[] pattern = {1,4,6,4,1};
-                int patternIndex = 0;
-                int iterator = 1;
-                for (int row = 0; row <= 25; row++) {
-                    values[row] = values[row] * (pattern[patternIndex]*iterator)/256;
-                    iterator += 2;
-                    if (patternIndex <= 4) {patternIndex = 0;}
-                    else {patternIndex++;}
-                }
-
-                valPos = 0;
-                //setPixelValues
-                for (int cx = -2; cx<=2; cx++) {
-                    for (int cy = -2; cy<=2; cy++) {
-                        int x = ox-cx;
-                        int y = oy-cy;
-                        pic.set(x, y, new Color(values[valPos], pic.get(x,y).getGreen(), pic.get(x,y).getBlue()));
-                        valPos++;
-                    }
-                }
-
+                int value = (int)(sum/avg);
+                editPic.set(x,y, new Color(value, value, value));
             }
         }
+        pic = editPic;
     }
 }
