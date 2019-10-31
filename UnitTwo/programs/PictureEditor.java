@@ -1,7 +1,5 @@
 import java.awt.Color;
 import java.lang.Math;
-import java.io.PrintStream;
-import java.io.FileNotFoundException;
 
 public class PictureEditor {
     static Color black = new Color(255,255,255);
@@ -10,35 +8,35 @@ public class PictureEditor {
     
     public static void main(String[] args) {
         
-        String filename = "david25.jpg";
+        String filename = "galaxy.jpg";
         
         pic = new Picture(filename);
         System.out.println(pic.width() + "w x " + pic.height()+"h");
         
-
+        long startTime = System.currentTimeMillis();
+        
         //border();
         //printPixelColors();
         //drawDarkerLine();
         //drawSquare(0,0,200);
-        greyScale(256);
+        //greyScale(256);
         //invertPic();
-        gaussianHell(1);
-        //meanBlur();
-        //meanBlur();
-        ordered3x3Dither();
-        //meanBlur();
+        sepia();
+        //droppedCam(10, 4);
+        //meanBlur(1);
+        //ordered3x3Dither();
         //ordered2x2Dither();
         //coloredOrdered2x2Dither();
         //floydDither();
-        //invertPic();
-        pic.show();
-        for (double x = -1.0; x <= 1.0; x++) {
-            for (double y = -1.0; y <=1.0; y++) {
-                System.out.print(calcGuassianStrength(x, y, 1.0) + " | ");
-            }
-            System.out.print("\n");
+        long endTime = System.currentTimeMillis();
+        if ((endTime - startTime) < 1000) {
+            System.out.println("That took " + (endTime - startTime) + " miliseconds");
         }
-            
+        else {
+            System.out.println("That took " + (endTime - startTime)/1000 + " seconds");
+        }
+
+        pic.show();
     }
     
     
@@ -83,6 +81,29 @@ public class PictureEditor {
             }
         }
     }
+    public static void sepia() {
+        int width = pic.width();
+        int height = pic.height();
+        for (int x = 0; x<width; x++) {
+            for (int y = 0; y<height; y++) {
+                double inputRed = pic.get(x,y).getRed();
+                double inputGreen = pic.get(x,y).getGreen();
+                double inputBlue = pic.get(x,y).getBlue();
+                int outputRed = (int)((inputRed * .393) + (inputGreen *.769) + (inputBlue * .189));
+                int outputGreen = (int)((inputRed * .349) + (inputGreen *.686) + (inputBlue * .168));
+                int outputBlue = (int)((inputRed * .272) + (inputGreen *.534) + (inputBlue * .131));
+                if (outputRed > 255) outputRed = 255;
+                if (outputGreen > 255) outputGreen = 255;
+                if (outputBlue > 255) outputBlue = 255;
+
+                pic.set(x,y, new Color(outputRed, outputGreen, outputBlue));
+
+            }
+        }
+        
+    }
+
+
     public static void border() {
         int width = pic.width();
         int height = pic.height();
@@ -179,26 +200,26 @@ public class PictureEditor {
         Picture editPic = pic;
         for (int x = 0; x<width; x+=2) {
             for (int y = 0; y<height;y+=2) {
-                try {int topLeft = pic.get(x,y).getRed(); if (topLeft > 64) {modChannel(x,y,'r', 255);}} catch (Exception e) {;}
-                try {int topRight = pic.get(x+1,y).getRed(); if (topRight > 128) {modChannel(x+1,y,'r', 255);}} catch (Exception e) {;}
-                try {int bottomLeft = pic.get(x, y+1).getRed(); if (bottomLeft > 192) {modChannel(x,y+1,'r', 255);}} catch (Exception e) {;}
-                try {int bottomRight = pic.get(x+1, y+1).getRed(); if (bottomRight > 0) {modChannel(x+1, y+1,'r', 255);}} catch (Exception e) {;}
+                try {int topLeft = pic.get(x,y).getRed(); if (topLeft > 64) {picModChannel(x,y,'r', 255);}} catch (Exception e) {;}
+                try {int topRight = pic.get(x+1,y).getRed(); if (topRight > 128) {picModChannel(x+1,y,'r', 255);}} catch (Exception e) {;}
+                try {int bottomLeft = pic.get(x, y+1).getRed(); if (bottomLeft > 192) {picModChannel(x,y+1,'r', 255);}} catch (Exception e) {;}
+                try {int bottomRight = pic.get(x+1, y+1).getRed(); if (bottomRight > 0) {picModChannel(x+1, y+1,'r', 255);}} catch (Exception e) {;}
             }
         }
         for (int x = 0; x<width; x+=2) {
             for (int y = 0; y<height;y+=2) {
-                try {int topLeft = pic.get(x,y).getGreen(); if (topLeft > 64) {modChannel(x,y,'g', 255);}} catch (Exception e) {;}
-                try {int topRight = pic.get(x+1,y).getGreen();if (topRight > 128) {modChannel(x+1,y,'g', 255);}} catch (Exception e) {;}
-                try {int bottomLeft = pic.get(x, y+1).getGreen();if (bottomLeft > 192) {modChannel(x,y+1,'g', 255);}} catch (Exception e) {;}
-                try {int bottomRight = pic.get(x+1, y+1).getGreen();if (bottomRight > 0) {modChannel(x+1, y+1,'g', 255);}} catch (Exception e) {;}
+                try {int topLeft = pic.get(x,y).getGreen(); if (topLeft > 64) {picModChannel(x,y,'g', 255);}} catch (Exception e) {;}
+                try {int topRight = pic.get(x+1,y).getGreen();if (topRight > 128) {picModChannel(x+1,y,'g', 255);}} catch (Exception e) {;}
+                try {int bottomLeft = pic.get(x, y+1).getGreen();if (bottomLeft > 192) {picModChannel(x,y+1,'g', 255);}} catch (Exception e) {;}
+                try {int bottomRight = pic.get(x+1, y+1).getGreen();if (bottomRight > 0) {picModChannel(x+1, y+1,'g', 255);}} catch (Exception e) {;}
             }
         }
         for (int x = 0; x<width; x+=2) {
             for (int y = 0; y<height;y+=2) {
-                try {int topLeft = pic.get(x,y).getBlue(); if (topLeft > 64) {modChannel(x,y,'b', 255);}} catch (Exception e) {;}
-                try {int topRight = pic.get(x+1,y).getBlue(); if (topRight > 128) {modChannel(x+1,y,'b', 255);}} catch (Exception e) {;}
-                try {int bottomLeft = pic.get(x, y+1).getBlue(); if (bottomLeft > 192) {modChannel(x,y+1,'b', 255);}} catch (Exception e) {;}
-                try {int bottomRight = pic.get(x+1, y+1).getBlue(); if (bottomRight > 0) {modChannel(x+1, y+1,'b', 255);}} catch (Exception e) {;}
+                try {int topLeft = pic.get(x,y).getBlue(); if (topLeft > 64) {picModChannel(x,y,'b', 255);}} catch (Exception e) {;}
+                try {int topRight = pic.get(x+1,y).getBlue(); if (topRight > 128) {picModChannel(x+1,y,'b', 255);}} catch (Exception e) {;}
+                try {int bottomLeft = pic.get(x, y+1).getBlue(); if (bottomLeft > 192) {picModChannel(x,y+1,'b', 255);}} catch (Exception e) {;}
+                try {int bottomRight = pic.get(x+1, y+1).getBlue(); if (bottomRight > 0) {picModChannel(x+1, y+1,'b', 255);}} catch (Exception e) {;}
                 
                 
                 
@@ -207,14 +228,17 @@ public class PictureEditor {
         }
         pic = editPic;
     }
+    public static void picModChannel(int x, int y, char color, int ColorInt) {
+        modChannel(x,y,color,ColorInt, pic);
+    }
 
-    public static void modChannel(int x, int y, char color, int ColorInt) {
+    public static void modChannel(int x, int y, char color, int ColorInt, Picture editPic) {
         Color oldColor = pic.get(x,y);
         Color modded = new Color(255,255,255);
         if (color == 'r') {modded = new Color(ColorInt, oldColor.getGreen(), oldColor.getBlue());}
         if (color == 'g') {modded = new Color(oldColor.getRed(), ColorInt, oldColor.getBlue());}
-        if (color == 'g') {modded = new Color(oldColor.getRed(), oldColor.getGreen(), ColorInt);}
-        pic.set(x,y,modded);
+        if (color == 'b') {modded = new Color(oldColor.getRed(), oldColor.getGreen(), ColorInt);}
+        editPic.set(x,y,modded);
     }
 
     public static void ordered3x3Dither() {
@@ -306,13 +330,13 @@ public class PictureEditor {
         }
     }
 
-    public static void meanBlur() {
+    public static void meanBlur(int size) {
         int width = pic.width();
         int height = pic.height();
         Picture editPic = pic;
         for (int x = 0; x<width; x++) {
             for (int y = 0; y<height;y++) {
-                int avg = 0;
+                /*int avg = 0;
                 int topLeft = 0;
                 int topCenter = 0;
                 int topRight = 0;
@@ -332,9 +356,23 @@ public class PictureEditor {
                 try {bottomCenter = pic.get(x, y+1).getRed();avg++;} catch (Exception e) {;}
                 try {bottomRight = pic.get(x+1, y+1).getRed();avg++;} catch (Exception e) {;}
                 
-                int mean = ((topLeft + topCenter + topRight + centerLeft + centerCenter + centerRight + centerLeft + bottomLeft + bottomCenter + bottomRight)/avg);
+                int mean = ((topLeft + topCenter + topRight + centerLeft + centerCenter + centerRight + centerLeft + bottomLeft + bottomCenter + bottomRight)/avg);*/
+                double sum = 0;
+                double avg = 0;
+                int mean = 0;
+                for (int ox = -size; ox <= size; ox++) {
+                    for (int oy = -size; oy <= size; oy++) {
+                        try {
+                            double color = pic.get(x-Math.abs(ox), y-Math.abs(oy) ).getRed();
+                            sum += color;
+                            avg++;
+                        } catch (Exception e) {;}
+
+                    }
+                }
+                mean = (int)(sum / avg);
                 if (mean > 255) {mean = 255;}
-                pic.set(x,y, new Color(mean,mean,mean));
+                editPic.set(x,y, new Color(mean,mean,mean));
             }
         }
         
@@ -346,36 +384,99 @@ public class PictureEditor {
         return res;
     }
     
-    public static void gaussianHell(double strength) {
-        Picture editPic = pic;
+    public static void droppedCam(int size, double strength) {
+        
         int width = pic.width();
         int height = pic.height();
+        Picture editPic = pic;
+        double[] kernels = new double[(int)Math.pow(size, 3)];
+        int counter = 0;
 
+        //calculate kernel
+        for (int ox = -size; ox <= size; ox++) {
+            for (int oy = -size; oy <= size; oy++) {
+                kernels[counter] = calcGuassianStrength(ox, oy, strength);
+                counter++;
+            }
+        }
+
+        //calculate red
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-
-        
-                
                 double sum = 0;
                 double avg = 0;
-                int size = 40;
+                counter = 0;
                 for (int ox = -size; ox <= size; ox++) {
                     for (int oy = -size; oy <= size; oy++) {
                         try {
-                            double color = pic.get(x-Math.abs(ox), y-Math.abs(oy)).getRed();
-                            //System.out.println(calcGuassianStrength(ox, oy, strength));
-                            double kernel = calcGuassianStrength(ox, oy, 0.5);
+                            double color = pic.get(x-Math.abs(ox), y-Math.abs(oy) ).getRed();
+                            double kernel = kernels[counter];
                             color = color * kernel;
                             sum += color;
                             avg+= kernel;
-                        } catch (Exception e) {;}
+                            counter++;
+                        } catch (Exception e) {counter++;}
 
                     }
                 }
                 int value = (int)(sum/avg);
-                editPic.set(x,y, new Color(value, value, value));
+                //editPic.set(x,y, new Color(value, 255, 255));
+                modChannel(x, y, 'r', value, editPic);
             }
         }
+
+
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                double sum = 0;
+                double avg = 0;
+                counter = 0;
+                for (int ox = -size; ox <= size; ox++) {
+                    for (int oy = -size; oy <= size; oy++) {
+                        try {
+                            double color = pic.get(x-Math.abs(ox), y-Math.abs(oy)).getBlue();
+                            double kernel = kernels[counter];
+                            color = color * kernel;
+                            sum += color;
+                            avg+= kernel;
+                            counter++;
+                        } catch (Exception e) {counter++;}
+
+                    }
+                }
+                int value = (int)(sum/avg);
+                //int red = editPic.get(x,y).getRed();
+                //editPic.set(x,y, new Color(red,value,255));
+                modChannel(x, y, 'b', value, editPic);
+            }
+        }
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                double sum = 0;
+                double avg = 0;
+                counter = 0;
+                for (int ox = -size; ox <= size; ox++) {
+                    for (int oy = -size; oy <= size; oy++) {
+                        try {
+                            double color = pic.get(x-Math.abs(ox), y-Math.abs(oy)).getGreen();
+                            double kernel = kernels[counter];
+                            color = color * kernel;
+                            sum += color;
+                            avg+= kernel;
+                            counter++;
+                        } catch (Exception e) {counter++;}
+
+                    }
+                }
+                int value = (int)(sum/avg);
+                //int red = editPic.get(x,y).getRed();
+                //int green = editPic.get(x,y).getGreen();
+                //editPic.set(x,y, new Color(red, green, value));
+                modChannel(x, y, 'g', value, editPic);
+            }
+        }
+
+
         pic = editPic;
     }
 }
