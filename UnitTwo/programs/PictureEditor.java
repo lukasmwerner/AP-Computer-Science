@@ -8,7 +8,7 @@ public class PictureEditor {
     
     public static void main(String[] args) {
         
-        String filename = "galaxy.jpg";
+        String filename = "javapic_50.jpg";
         
         pic = new Picture(filename);
         System.out.println(pic.width() + "w x " + pic.height()+"h");
@@ -19,12 +19,14 @@ public class PictureEditor {
         //printPixelColors();
         //drawDarkerLine();
         //drawSquare(0,0,200);
-        //greyScale(256);
+        greyScale(256);
         //invertPic();
-        sepia();
-        //droppedCam(10, 4);
+        //sepia();
+        ordered3x3Dither();
+        droppedCam(16, 10);
+        //invertPic();
         //meanBlur(1);
-        //ordered3x3Dither();
+        
         //ordered2x2Dither();
         //coloredOrdered2x2Dither();
         //floydDither();
@@ -388,7 +390,7 @@ public class PictureEditor {
         
         int width = pic.width();
         int height = pic.height();
-        Picture editPic = pic;
+        Picture editPic = new Picture(width, height);//pic;
         double[] kernels = new double[(int)Math.pow(size, 3)];
         int counter = 0;
 
@@ -397,6 +399,11 @@ public class PictureEditor {
             for (int oy = -size; oy <= size; oy++) {
                 kernels[counter] = calcGuassianStrength(ox, oy, strength);
                 counter++;
+            }
+        }
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) { 
+                editPic.set(x,y, new Color(255,255,255));
             }
         }
 
@@ -420,11 +427,10 @@ public class PictureEditor {
                     }
                 }
                 int value = (int)(sum/avg);
-                //editPic.set(x,y, new Color(value, 255, 255));
-                modChannel(x, y, 'r', value, editPic);
+                editPic.set(x,y, new Color(value, 255, 255));
+                //modChannel(x, y, 'r', value, editPic);
             }
         }
-
 
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
@@ -445,11 +451,12 @@ public class PictureEditor {
                     }
                 }
                 int value = (int)(sum/avg);
-                //int red = editPic.get(x,y).getRed();
-                //editPic.set(x,y, new Color(red,value,255));
-                modChannel(x, y, 'b', value, editPic);
+                int red = editPic.get(x,y).getRed();
+                editPic.set(x,y, new Color(red,value,255));
+                //modChannel(x, y, 'b', value, editPic);
             }
         }
+        
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 double sum = 0;
@@ -469,12 +476,18 @@ public class PictureEditor {
                     }
                 }
                 int value = (int)(sum/avg);
-                //int red = editPic.get(x,y).getRed();
-                //int green = editPic.get(x,y).getGreen();
-                //editPic.set(x,y, new Color(red, green, value));
-                modChannel(x, y, 'g', value, editPic);
+                int red = editPic.get(x,y).getRed();
+                int green = editPic.get(x,y).getGreen();
+                editPic.set(x,y, new Color(red, green, value));
+                //modChannel(x, y, 'g', value, editPic);
             }
         }
+
+        
+
+
+        
+        
 
 
         pic = editPic;
