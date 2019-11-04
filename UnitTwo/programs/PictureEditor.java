@@ -8,22 +8,25 @@ public class PictureEditor {
     
     public static void main(String[] args) {
         
-        String filename = "javapic_50.jpg";
+        String filename = "javapic.jpg";
         
         pic = new Picture(filename);
+        System.out.println("Warning this may take a while.");
         System.out.println(pic.width() + "w x " + pic.height()+"h");
         
         long startTime = System.currentTimeMillis();
         
+        testKernelConvo();
+        //sharpen();
         //border();
         //printPixelColors();
         //drawDarkerLine();
         //drawSquare(0,0,200);
-        greyScale(256);
+        //greyScale(256);
         //invertPic();
         //sepia();
-        ordered3x3Dither();
-        droppedCam(16, 10);
+        //ordered3x3Dither();
+        //droppedCam(16, 10);
         //invertPic();
         //meanBlur(1);
         
@@ -143,6 +146,97 @@ public class PictureEditor {
         
     }
     
+
+    public static void convolveKernel(int[] kernels) {
+        int size = kernels.length;
+        int width = pic.width();
+        int height = pic.height();
+        Picture editPic = new Picture(width, height);
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y<height; y++) {
+                
+                double sum = 0;
+                double avg = 0;
+                int counter = 0;
+                for (int ox = -size; ox <= size; ox++) {
+                    for (int oy = -size; oy <= size; oy++) {
+                        try {
+                            double color = pic.get(x-Math.abs(ox), y-Math.abs(oy) ).getRed();
+                            double kernel = kernels[counter];
+                            color = color * kernel;
+                            sum += color;
+                            avg+= kernel;
+                            counter++;
+                        } catch (Exception e) {counter++;}
+
+                    }
+                }
+                int value = (int)(sum/avg);
+                if (value > 255) {value = 250;}
+                modChannel(x, y, 'r', value, editPic);
+            }
+        }
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y<height; y++) {
+                
+                double sum = 0;
+                double avg = 0;
+                int counter = 0;
+                for (int ox = -size; ox <= size; ox++) {
+                    for (int oy = -size; oy <= size; oy++) {
+                        try {
+                            double color = pic.get(x-Math.abs(ox), y-Math.abs(oy) ).getGreen();
+                            double kernel = kernels[counter];
+                            color = color * kernel;
+                            sum += color;
+                            avg+= kernel;
+                            counter++;
+                        } catch (Exception e) {counter++;}
+
+                    }
+                }
+                int value = (int)(sum/avg);
+                if (value > 255) {value = 250;}
+                modChannel(x, y, 'g', value, editPic);
+            }
+        }
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y<height; y++) {
+                
+                double sum = 0;
+                double avg = 0;
+                int counter = 0;
+                for (int ox = -size; ox <= size; ox++) {
+                    for (int oy = -size; oy <= size; oy++) {
+                        try {
+                            double color = pic.get(x-Math.abs(ox), y-Math.abs(oy) ).getBlue();
+                            double kernel = kernels[counter];
+                            color = color * kernel;
+                            sum += color;
+                            avg+= kernel;
+                            counter++;
+                        } catch (Exception e) {counter++;}
+
+                    }
+                }
+                int value = (int)(sum/avg);
+                if (value > 255) {value = 250;}
+                modChannel(x, y, 'b', value, editPic);
+            }
+        }
+        pic = editPic;
+    }
+
+    public static void testKernelConvo() {
+        int[] kernel = {0,0,0,0,1,0,0,0,0};
+        convolveKernel(kernel);
+    }
+
+    public static void sharpen() {
+        int[] kernel = {0,-1,0,-1,5,-1,0,-1,0};
+        convolveKernel(kernel);
+    }
+
     public static void invertPic() {
         int width = pic.width();
         int height = pic.height();
@@ -235,8 +329,10 @@ public class PictureEditor {
     }
 
     public static void modChannel(int x, int y, char color, int ColorInt, Picture editPic) {
+        if (color != 'r' || color != 'g' || color != 'b') {return;}
         Color oldColor = pic.get(x,y);
         Color modded = new Color(255,255,255);
+        if (ColorInt > 255) {ColorInt = 255;}
         if (color == 'r') {modded = new Color(ColorInt, oldColor.getGreen(), oldColor.getBlue());}
         if (color == 'g') {modded = new Color(oldColor.getRed(), ColorInt, oldColor.getBlue());}
         if (color == 'b') {modded = new Color(oldColor.getRed(), oldColor.getGreen(), ColorInt);}
