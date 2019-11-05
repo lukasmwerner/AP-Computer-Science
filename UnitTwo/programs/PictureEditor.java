@@ -258,7 +258,7 @@ public class PictureEditor {
     public static void randomKernelRun() {
         int[] kernels = {0,0,0,0,0,0,0,0,0};
         for (int i = 0; i <= 8; i++) {
-            int randomInt = (int)(Math.random() * 8) + 1;
+            int randomInt = (int)(Math.random() * 16) - 8;
             System.out.print(randomInt + " ");
             kernels[i] = randomInt;
         }
