@@ -8,7 +8,7 @@ public class PictureEditor {
     
     public static void main(String[] args) {
         
-        String filename = "galaxy.jpg";
+        String filename = "javapic.jpg";
         
         pic = new Picture(filename);
         System.out.println("Warning this may take a while.");
@@ -16,10 +16,12 @@ public class PictureEditor {
         
         long startTime = System.currentTimeMillis();
         
+        vFlip();
+        flip();
         //outline();
         //intensifiedSharpen();
         //emboss();
-        randomKernelRun();
+        //randomKernelRun();
         //testKernelConvo();
         //sharpen();
         //meanBlur(3);
@@ -70,6 +72,78 @@ public class PictureEditor {
             pic.set(x, y, pixelColor);
         }
     }
+
+    public static void flip() {
+        int width = pic.width();
+        int height = pic.height();
+        int[][] rowImageOne = new int[width][3];
+        int[][] rowImageTwo = new int[width][3];
+        for (int y = 0; y<height/2; y++) { 
+            //read row 1
+            for (int x = 0; x<width; x++) {
+                rowImageOne[x][0] = pic.get(x,y).getRed();
+                rowImageOne[x][1] = pic.get(x,y).getGreen();
+                rowImageOne[x][2] = pic.get(x,y).getBlue();
+            }
+            int yTwo = (height-1) - y;
+            //read row 2
+            for (int x = 0; x<width; x++) {
+                rowImageTwo[x][0] = pic.get(x,yTwo).getRed();
+                rowImageTwo[x][1] = pic.get(x,yTwo).getGreen();
+                rowImageTwo[x][2] = pic.get(x,yTwo).getBlue();
+            }
+            //set row 1
+            int x = 0;
+            for (int[] colors : rowImageTwo) {
+                pic.set(x,y, new Color(colors[0], colors[1], colors[2]));
+                x++;
+            }
+            //set row 1
+            int x2 = 0;
+            for (int[] colorsT : rowImageOne) {
+                pic.set(x2,yTwo, new Color(colorsT[0], colorsT[1], colorsT[2]));
+                x2++;
+            }
+
+
+        }
+    }
+    public static void vFlip() {
+        int width = pic.width();
+        int height = pic.height();
+        int[][] rowImageOne = new int[height][3];
+        int[][] rowImageTwo = new int[height][3];
+        for (int x = 0; x<width/2; x++) { 
+            //read row 1
+            for (int y = 0; y<height; y++) {
+                rowImageOne[y][0] = pic.get(x,y).getRed();
+                rowImageOne[y][1] = pic.get(x,y).getGreen();
+                rowImageOne[y][2] = pic.get(x,y).getBlue();
+            }
+            int xTwo = (width-1) - x;
+            //read row 2
+            for (int y = 0; y<height; y++) {
+                rowImageTwo[y][0] = pic.get(xTwo,y).getRed();
+                rowImageTwo[y][1] = pic.get(xTwo,y).getGreen();
+                rowImageTwo[y][2] = pic.get(xTwo,y).getBlue();
+            }
+            //set row 1
+            int y = 0;
+            for (int[] colors : rowImageTwo) {
+                pic.set(x,y, new Color(colors[0], colors[1], colors[2]));
+                y++;
+            }
+            //set row 1
+            y = 0;
+            for (int[] colorsT : rowImageOne) {
+                pic.set(xTwo,y, new Color(colorsT[0], colorsT[1], colorsT[2]));
+                y++;
+            }
+
+
+        }
+    }
+
     public static void darken() {
         int width = pic.width();
         int height = pic.height();
@@ -152,7 +226,7 @@ public class PictureEditor {
     }
     
 
-    public static void convolveKernel(int[] kernels) {
+    public static void convolveKernel(double[] kernels) {
         int size = kernels.length;
         int width = pic.width();
         int height = pic.height();
@@ -224,41 +298,41 @@ public class PictureEditor {
     }
 
     public static void testKernelConvo() {
-        int[] kernel = {0,0,0,0,1,0,0,0,0};
+        double[] kernel = {0,0,0,0,1,0,0,0,0};
         convolveKernel(kernel);
     }
 
     public static void sharpen() {
-        int[] kernel = {0,-1,0,-1,5,-1,0,-1,0};
+        double[] kernel = {0,-1,0,-1,5,-1,0,-1,0};
         convolveKernel(kernel);
     }
 
     public static void detectEdge() {
         //int[] gX = {1,0,-1, 2, 0, -2, 1, 0, -1};
         //convolveKernel(gX);
-        int[] gY = {-1, -2, -1, 0, 0, 0, 1, 2, 1};
+        double[] gY = {-1, -2, -1, 0, 0, 0, 1, 2, 1};
         convolveKernel(gY);
     }
 
     public static void emboss() {
-        int[] kernels = {-2, -1, 0, -1, 1, 1, 0, 1, 2};
+        double[] kernels = {-2, -1, 0, -1, 1, 1, 0, 1, 2};
         convolveKernel(kernels);
     }
 
     public static void intensifiedSharpen() {
-        int[] kernels = {-1, -1, -1, -1, 5, -1, -1, -1, -1};
+        double[] kernels = {-1, -1, -1, -1, 5, -1, -1, -1, -1};
         convolveKernel(kernels);
     }
 
     public static void outline() {
-        int[] kernels = {-1,-1,-1,-1,8,-1,-1,-1,-1};
+        double[] kernels = {-1,-1,-1,-1,8,-1,-1,-1,-1};
         convolveKernel(kernels);
     }
 
     public static void randomKernelRun() {
-        int[] kernels = {0,0,0,0,0,0,0,0,0};
+        double[] kernels = {0,0,0,0,0,0,0,0,0};
         for (int i = 0; i <= 8; i++) {
-            int randomInt = (int)(Math.random() * 16) - 8;
+            int randomInt = (int)(Math.random() * 32) - 16;
             System.out.print(randomInt + " ");
             kernels[i] = randomInt;
         }
@@ -464,27 +538,6 @@ public class PictureEditor {
         Picture editPic = pic;
         for (int x = 0; x<width; x++) {
             for (int y = 0; y<height;y++) {
-                /*int avg = 0;
-                int topLeft = 0;
-                int topCenter = 0;
-                int topRight = 0;
-                int centerLeft = 0;
-                int centerCenter = 0;
-                int centerRight = 0;
-                int bottomLeft = 0;
-                int bottomCenter = 0;
-                int bottomRight = 0;
-                try {topLeft = pic.get(x-1,y-1).getRed();avg++;} catch (Exception e) {;}
-                try {topCenter = pic.get(x,y-1).getRed();avg++;} catch (Exception e) {;}
-                try {topRight = pic.get(x+1,y-1).getRed();avg++;} catch (Exception e) {;}
-                try {centerLeft = pic.get(x-1,y).getRed();avg++;} catch (Exception e) {;}
-                try {centerCenter = pic.get(x,y).getRed();avg++;} catch (Exception e) {;}
-                try {centerRight = pic.get(x+1, y).getRed();avg++;} catch (Exception e) {;}
-                try {bottomLeft = pic.get(x-1, y+1).getRed();avg++;} catch (Exception e) {;}
-                try {bottomCenter = pic.get(x, y+1).getRed();avg++;} catch (Exception e) {;}
-                try {bottomRight = pic.get(x+1, y+1).getRed();avg++;} catch (Exception e) {;}
-                
-                int mean = ((topLeft + topCenter + topRight + centerLeft + centerCenter + centerRight + centerLeft + bottomLeft + bottomCenter + bottomRight)/avg);*/
                 double sum = 0;
                 double avg = 0;
                 int mean = 0;
@@ -500,7 +553,47 @@ public class PictureEditor {
                 }
                 mean = (int)(sum / avg);
                 if (mean > 255) {mean = 255;}
-                editPic.set(x,y, new Color(mean,mean,mean));
+                modChannel(x, y, 'r', mean, editPic);
+            }
+        }
+        for (int x = 0; x<width; x++) {
+            for (int y = 0; y<height;y++) {
+                double sum = 0;
+                double avg = 0;
+                int mean = 0;
+                for (int ox = -size; ox <= size; ox++) {
+                    for (int oy = -size; oy <= size; oy++) {
+                        try {
+                            double color = pic.get(x-Math.abs(ox), y-Math.abs(oy) ).getGreen();
+                            sum += color;
+                            avg++;
+                        } catch (Exception e) {;}
+
+                    }
+                }
+                mean = (int)(sum / avg);
+                if (mean > 255) {mean = 255;}
+                modChannel(x, y, 'g', mean, editPic);
+            }
+        }
+        for (int x = 0; x<width; x++) {
+            for (int y = 0; y<height;y++) {
+                double sum = 0;
+                double avg = 0;
+                int mean = 0;
+                for (int ox = -size; ox <= size; ox++) {
+                    for (int oy = -size; oy <= size; oy++) {
+                        try {
+                            double color = pic.get(x-Math.abs(ox), y-Math.abs(oy) ).getBlue();
+                            sum += color;
+                            avg++;
+                        } catch (Exception e) {;}
+
+                    }
+                }
+                mean = (int)(sum / avg);
+                if (mean > 255) {mean = 255;}
+                modChannel(x, y, 'b', mean, editPic);
             }
         }
         
@@ -532,90 +625,7 @@ public class PictureEditor {
                 editPic.set(x,y, new Color(255,255,255));
             }
         }
-
-        //calculate red
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
-                double sum = 0;
-                double avg = 0;
-                counter = 0;
-                for (int ox = -size; ox <= size; ox++) {
-                    for (int oy = -size; oy <= size; oy++) {
-                        try {
-                            double color = pic.get(x-Math.abs(ox), y-Math.abs(oy) ).getRed();
-                            double kernel = kernels[counter];
-                            color = color * kernel;
-                            sum += color;
-                            avg+= kernel;
-                            counter++;
-                        } catch (Exception e) {counter++;}
-
-                    }
-                }
-                int value = (int)(sum/avg);
-                editPic.set(x,y, new Color(value, 255, 255));
-                //modChannel(x, y, 'r', value, editPic);
-            }
-        }
-
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
-                double sum = 0;
-                double avg = 0;
-                counter = 0;
-                for (int ox = -size; ox <= size; ox++) {
-                    for (int oy = -size; oy <= size; oy++) {
-                        try {
-                            double color = pic.get(x-Math.abs(ox), y-Math.abs(oy)).getBlue();
-                            double kernel = kernels[counter];
-                            color = color * kernel;
-                            sum += color;
-                            avg+= kernel;
-                            counter++;
-                        } catch (Exception e) {counter++;}
-
-                    }
-                }
-                int value = (int)(sum/avg);
-                int red = editPic.get(x,y).getRed();
-                editPic.set(x,y, new Color(red,value,255));
-                //modChannel(x, y, 'b', value, editPic);
-            }
-        }
-        
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
-                double sum = 0;
-                double avg = 0;
-                counter = 0;
-                for (int ox = -size; ox <= size; ox++) {
-                    for (int oy = -size; oy <= size; oy++) {
-                        try {
-                            double color = pic.get(x-Math.abs(ox), y-Math.abs(oy)).getGreen();
-                            double kernel = kernels[counter];
-                            color = color * kernel;
-                            sum += color;
-                            avg+= kernel;
-                            counter++;
-                        } catch (Exception e) {counter++;}
-
-                    }
-                }
-                int value = (int)(sum/avg);
-                int red = editPic.get(x,y).getRed();
-                int green = editPic.get(x,y).getGreen();
-                editPic.set(x,y, new Color(red, green, value));
-                //modChannel(x, y, 'g', value, editPic);
-            }
-        }
-
-        
-
-
-        
-        
-
-
+        convolveKernel(kernels);
         pic = editPic;
     }
 }
