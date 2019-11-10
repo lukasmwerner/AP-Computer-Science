@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.lang.Math;
+import java.util.Arrays; 
 
 public class PictureEditor {
     static Color black = new Color(255, 255, 255);
@@ -8,7 +9,7 @@ public class PictureEditor {
 
     public static void main(String[] args) {
 
-        String filename = "nixon.jpg";
+        String filename = "galaxy.jpg";
 
         pic = new Picture(filename);
         System.out.println("Warning this may take a while.");
@@ -16,15 +17,16 @@ public class PictureEditor {
 
         long startTime = System.currentTimeMillis();
 
+        // SortByBrightness();
         // derezer();
-         jumble();
-        //addNoise();
-        //drawTriangleTop();
+        // jumble();
+        // addNoise();
+        // drawTriangleTop();
         // removeRed();
         // removeBlue();
         // removeGreen();
-         vMirror();
-         mirror();
+        // vMirror();
+        // mirror();
         // vFlip();
         // flip();
         // outline();
@@ -39,14 +41,16 @@ public class PictureEditor {
         // printPixelColors();
         // drawDarkerLine();
         // drawSquare(0,0,200);
-        // greyScale(256);
+        // greyScale(50);
         // sepia();
         // ordered3x3Dither();
-        // droppedCam(16, 10);
+        // droppedCam(10,8);
         // invertPic();
         // ordered2x2Dither();
         // coloredOrdered2x2Dither();
         // floydDither();
+
+        SortByBrightness();
 
         long endTime = System.currentTimeMillis();
         if ((endTime - startTime) < 1000) {
@@ -1035,4 +1039,42 @@ public class PictureEditor {
             }
         } catch (Exception e) {;}
     }
+
+    public static void SortByBrightness() {
+		int width = pic.width();
+		int height = pic.height();
+		int[][] imageRow = new int[width][4];
+		int[] averages = new int[width];
+		
+		for (int y = 0; y < height; y++) {
+
+			for (int x = 0; x < width; x++) {
+				int red = pic.get(x,y).getRed();
+				int green = pic.get(x,y).getGreen();
+				int blue = pic.get(x,y).getBlue();
+				
+				int average = (red + green + blue) / 3;
+				imageRow[x][0] = red;
+				imageRow[x][1] = green;
+				imageRow[x][2] = blue;
+				imageRow[x][3] = average;
+				averages[x] = average;
+			}
+			Arrays.sort(averages);
+			for (int x = 0; x < width; x++) {
+				int greyScaled = averages[x];
+				int[] colors = new int[3];
+				for (int[] pixel : imageRow) {
+					if (pixel[3] == greyScaled) {
+						colors[0] = pixel[0];
+						colors[1] = pixel[1];
+						colors[2] = pixel[2];
+						break;
+					}
+				}
+				pic.set(x,y, new Color(colors[0], colors[1], colors[2]));
+			}
+		}
+
+	}
 }

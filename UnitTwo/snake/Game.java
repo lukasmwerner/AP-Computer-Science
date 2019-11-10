@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import javax.swing.*;
 
 public class Game extends JComponent implements KeyListener {
-    Snake snake = new Snake();
+    //Snake snake = new Snake();
     static LinkedList<int[]> snakeList = new LinkedList<int[]>(); //head at position 0
     static int dir = 0; // 0 UP 1 DOWN 2 LEFT 3 RIGHT
     static private char c = ' ';
@@ -26,9 +26,10 @@ public class Game extends JComponent implements KeyListener {
         window.add(game); // add game to the window
 
         window.setVisible(true); // show window
-        snakeList.addLast(new int[] {200,500});
-        snakeList.addLast(new int[] {200,550});
-        while (!gameOver) { // main function loop
+        while (true) {
+            snakeList.addLast(new int[] {200,500});
+            snakeList.addLast(new int[] {200,550});
+            while (!gameOver) { // main function loop
                 int headX = snakeList.get(0)[0];
                 int headY = snakeList.get(0)[1];
                 int[] headed = new int[] {headX, headY};
@@ -50,8 +51,15 @@ public class Game extends JComponent implements KeyListener {
                 }
 
                 game.repaint();
+            }
+            if (dir == -10) {
+                for (int i = 0; i < snakeList.size(); i++) {
+                    snakeList.remove(i);
+                }
+                gameOver = false;
+            }
+            game.repaint();
         }
-        game.repaint();
     }
 
 
@@ -85,18 +93,15 @@ public class Game extends JComponent implements KeyListener {
         int i = 0;
         if (head[0] < 0 || head[0] >= 500) {
             gameOver = true;
-            System.out.println("Game Over");
         }
         if (head[1] < 0 || head[1] >= 500) {
             gameOver = true;
-            System.out.println("Game Over");
         }
         for (int[] bodyPart : snakeList) {
             if (head[0] == bodyPart[0]) {
                 if (head[1] == bodyPart[1]) {
                     if (i != 0) {
                         gameOver = true;
-                        System.out.println("Game Over");
                     }
                     
                 }
@@ -164,6 +169,7 @@ public class Game extends JComponent implements KeyListener {
         if (c == 'a') {dir = 2;}
         if (c == 'd') {dir = 3;}
         if (c == 'q') {dir = 9999999; diff= 9999999;}
+        if (c == 'r') {dir = -10;}
         if (c == '1') {diff = 5;}
         if (c == '2') {diff = 3;}
         if (c == '3') {diff = 2;}
