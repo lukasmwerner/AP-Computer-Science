@@ -2,6 +2,11 @@ import java.awt.*;
 import javax.swing.*;
 
 public class FuncPlotter extends JComponent {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+
     public static void main(String[] args) {
         JFrame window = new JFrame("Function Plotter");
         FuncPlotter shapes = new FuncPlotter();

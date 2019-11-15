@@ -1,4 +1,3 @@
-import javax.swing.plaf.multi.MultiPanelUI;
 
 public class MultTable {
 

@@ -123,7 +123,6 @@ public class PictureEditor {
         int width = pic.width();
         int height = pic.height();
         int[][] rowImageOne = new int[width][3];
-        int[][] rowImageTwo = new int[width][3];
         for (int y = 0; y < height / 2; y++) {
             // read row 1
             for (int x = 0; x < width; x++) {
@@ -181,7 +180,6 @@ public class PictureEditor {
         int width = pic.width();
         int height = pic.height();
         int[][] rowImageOne = new int[height][3];
-        int[][] rowImageTwo = new int[height][3];
         for (int x = 0; x < width / 2; x++) {
             // read row 1
             for (int y = 0; y < height; y++) {

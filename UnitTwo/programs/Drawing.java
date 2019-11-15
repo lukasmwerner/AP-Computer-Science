@@ -2,6 +2,11 @@ import java.awt.*;
 import javax.swing.*;
 
 public class Drawing extends JComponent {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+
     public static void main(String[] args) {
         JFrame window = new JFrame("My Drawing"); // create window with the title "My Drawing"
         Drawing shapes = new Drawing();
