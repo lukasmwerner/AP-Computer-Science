@@ -1,5 +1,4 @@
 import java.util.Scanner;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 
 /* 
@@ -223,7 +222,7 @@ public class Adventure {
     } 
 
     public static ArrayList<Integer> findTypePosition(int[][] playField, int typeId) {
-        ArrayList list = new ArrayList<Integer>();
+        ArrayList<Integer> list = new ArrayList<Integer>();
 
         int y = 0;
         boolean found = false;
