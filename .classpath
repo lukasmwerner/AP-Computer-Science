@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+    <classpathentry kind="src" path="UnitTwo/programs"/>
+    <classpathentry kind="src" path="UnitTwo/snake"/>
+    <classpathentry kind="src" path="UnitTwo/homework"/>
+
+    <classpathentry kind="src" path="UnitOne/programs"/>
+    <classpathentry kind="src" path="UnitOne/HW"/>
+    <classpathentry kind="src" path="UnitTwo/finalProj"/>
+
+</classpath>
