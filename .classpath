@@ -8,4 +8,6 @@
     <classpathentry kind="src" path="UnitOne/HW/*.*"/>
     <classpathentry kind="src" path="UnitOne/finalProj/*.*"/>
 
+    <classpathentry kind="src" path="UnitThree/programs/*.*"/>
+    <classpathentry kind="src" path="UnitThree/HW/*.*"/>
 </classpath>
