@@ -1,0 +1,13 @@
+public class Test {
+    public static void main(String[] args) {
+        int x = 0
+        x += 2
+        print(x)
+        if (x == 2)
+            print("True")
+        print(yeet(1))
+    }
+    public static String yeet(int yah) {
+        return yah+"1"
+    }
+}
