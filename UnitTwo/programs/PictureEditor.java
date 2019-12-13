@@ -9,7 +9,7 @@ public class PictureEditor {
 
     public static void main(String[] args) {
 
-        String filename = "galaxy.jpg";
+        String filename = "javapic.jpg";
 
         pic = new Picture(filename);
         System.out.println("Warning this may take a while.");
@@ -19,7 +19,7 @@ public class PictureEditor {
 
         // SortByBrightness();
         // derezer();
-        // jumble();
+         jumble();
         // addNoise();
         // drawTriangleTop();
         // removeRed();
@@ -50,7 +50,7 @@ public class PictureEditor {
         // coloredOrdered2x2Dither();
         // floydDither();
 
-        SortByBrightness();
+        // SortByBrightness();
 
         long endTime = System.currentTimeMillis();
         if ((endTime - startTime) < 1000) {
@@ -978,17 +978,37 @@ public class PictureEditor {
             for (int x = 0; x < width; x+=3) {
                 for (int y = 0; y < height; y+=3) {
                     int sum = 0;
-                    for (int ox = -2; ox <= 2; ox++) {
+                    for (int ox = -1; ox <= 1; ox++) {
                         for (int oy = -2; oy <= 2; oy++) {
                             try {
-                                sum += pic.get(x,y).getRed();
+                                sum += pic.get(x+ox,y+oy).getRed();
                             }catch (Exception e) {;}
                         }
                     }
-                    for (int ox = -2; ox <= 2; ox++) {
+                    for (int ox = -1; ox <= 1; ox++) {
                         for (int oy = -2; oy <= 2; oy++) {
                             try {
-                                picModChannel(x, y, 'r', sum);
+                                picModChannel(x+ox, y+oy, 'r', sum);
+                            }catch (Exception e) {;}
+                        }
+                    }
+
+                }
+            }
+            for (int x = 0; x < width; x+=3) {
+                for (int y = 0; y < height; y+=3) {
+                    int sum = 0;
+                    for (int ox = -1; ox <= 1; ox++) {
+                        for (int oy = -1; oy <= 1; oy++) {
+                            try {
+                                sum += pic.get(x+ox,y+oy).getBlue();
+                            }catch (Exception e) {;}
+                        }
+                    }
+                    for (int ox = -1; ox <= 1; ox++) {
+                        for (int oy = -1; oy <= 1; oy++) {
+                            try {
+                                picModChannel(x+ox, y+oy, 'b', sum);
                             }catch (Exception e) {;}
                         }
                     }
@@ -1001,34 +1021,14 @@ public class PictureEditor {
                     for (int ox = -2; ox <= 2; ox++) {
                         for (int oy = -2; oy <= 2; oy++) {
                             try {
-                                sum += pic.get(x,y).getBlue();
+                                sum += pic.get(x+ox,y+oy).getGreen();
                             }catch (Exception e) {;}
                         }
                     }
                     for (int ox = -2; ox <= 2; ox++) {
                         for (int oy = -2; oy <= 2; oy++) {
                             try {
-                                picModChannel(x, y, 'b', sum);
-                            }catch (Exception e) {;}
-                        }
-                    }
-
-                }
-            }
-            for (int x = 0; x < width; x+=3) {
-                for (int y = 0; y < height; y+=3) {
-                    int sum = 0;
-                    for (int ox = -2; ox <= 2; ox++) {
-                        for (int oy = -2; oy <= 2; oy++) {
-                            try {
-                                sum += pic.get(x,y).getGreen();
-                            }catch (Exception e) {;}
-                        }
-                    }
-                    for (int ox = -2; ox <= 2; ox++) {
-                        for (int oy = -2; oy <= 2; oy++) {
-                            try {
-                                picModChannel(x, y, 'g', sum);
+                                picModChannel(x+ox,y+oy, 'g', sum);
                             }catch (Exception e) {;}
                         }
                     }
