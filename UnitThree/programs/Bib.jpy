@@ -1,0 +1,6 @@
+public static void main(String[] args) {
+    Article art = new Article()
+    print(art)
+    Website web = new Website()
+    print(web)
+}
