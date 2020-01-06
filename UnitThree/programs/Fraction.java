@@ -19,7 +19,6 @@ public class Fraction {
 		if (denominator == other.denominator) {
 			int newNum = numerator + other.numerator;
 			Fraction newFrac = new Fraction(newNum, denominator);
-			newFrac.simp();
 			return newFrac;
 		} else {
 			int f1Num = numerator * other.denominator;

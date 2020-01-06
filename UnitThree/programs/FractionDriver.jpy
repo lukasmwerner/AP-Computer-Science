@@ -8,4 +8,8 @@ public static void main(String[] args) {
     Fraction f5 = new Fraction(24,90)
     f5.simp()
     print(f5)
+    print(blarg())
+}
+public static String blarg() {
+    return "Hello"
 }
