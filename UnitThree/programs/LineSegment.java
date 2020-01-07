@@ -20,6 +20,9 @@ public class LineSegment {
     public double getDistance() {
         return Math.sqrt( (p2.getX() - p1.getX())*(p2.getX() - p1.getX()) + (p2.getY() - p1.getY())*(p2.getY() - p1.getY()) );
     }
+    public double distance() {
+        return Math.sqrt( (p2.getX() - p1.getX())*(p2.getX() - p1.getX()) + (p2.getY() - p1.getY())*(p2.getY() - p1.getY()) );
+    }
     public String toString() {
         return String.format("p1: %s, p2: %s, Slope: %s, Distance: %s", p1, p2, this.getSlope(), this.getDistance());
     }
