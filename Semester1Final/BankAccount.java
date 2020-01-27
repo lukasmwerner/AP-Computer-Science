@@ -28,12 +28,12 @@ class BankAccount {
     public void use(int amt) {
         balance-=amt;
     }
-    public void transfer(BankAccount other, double amt) {
+    public void transfer(BankAccount other, double amt) throws InsufficientFundError {
         if (balance-amt >= 0) {
             other.deposit(amt);
             this.use(amt);
         } else {
-            System.out.println("Insufficient funds to transfer money!");
+            throw new InsufficientFundError();
         }
     }
 
@@ -41,4 +41,10 @@ class BankAccount {
         return "Name: " + this.name + " Account Number: " + this.accountNumber + " Balance: " + this.balance;
     }
 
+}
+
+class InsufficientFundError extends Exception {
+    public InsufficientFundError() {
+        super("Insufficient funds to transfer money!");
+    }
 }

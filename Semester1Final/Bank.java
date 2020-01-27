@@ -9,7 +9,12 @@ class Bank {
         System.out.println(falken);
         lukas.deposit(20);
         System.out.println(lukas);
-        falken.transfer(lukas, 80);
+        
+        try {
+            falken.transfer(lukas, 501);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
         System.out.println(falken);
         System.out.println(lukas);
         System.out.print("\n");
