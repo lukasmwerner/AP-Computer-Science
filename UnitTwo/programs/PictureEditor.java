@@ -1,6 +1,6 @@
 import java.awt.Color;
 import java.lang.Math;
-import java.util.Arrays; 
+import java.util.Arrays;
 
 public class PictureEditor {
     static Color black = new Color(255, 255, 255);
@@ -17,9 +17,9 @@ public class PictureEditor {
 
         long startTime = System.currentTimeMillis();
 
-        // SortByBrightness();
+         SortByBrightness();
         // derezer();
-         jumble();
+        // jumble();
         // addNoise();
         // drawTriangleTop();
         // removeRed();
