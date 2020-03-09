@@ -18,7 +18,6 @@ public class TwoDArr {
         }
 
 
-
         System.out.print("First word to look for: ");
         String word1 = input.nextLine();
         System.out.print("Second word to look for: ");
@@ -49,6 +48,11 @@ public class TwoDArr {
                 System.out.println("Column: " + c +", At index " + column.indexOf(word2) + " containsthe second word");
             }
         }
+
+        for (int i = 1; i <= board.length; i++) {
+            
+        }
+
 
     }
 }
