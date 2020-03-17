@@ -1,13 +1,19 @@
 import java.util.*;
 
 public class MagicBox {
-    private static [[int req = 15;
+    /* 
+        Array algorithms: Traversing 2d arrays, shuffling 1d arrays, summing columns and rows in 2d arrays
+    */
+
+    private static int req = 15;
     public static void main(String[] args) {
         System.out.println(isMagicBox(new int[][] {
             {7, 0, 5},
             {2, 4, 6},
             {3, 8, 1}
         }));
+        int[][] user = parseMagic();
+        System.out.println(isMagicBox(user));
 
         int[][] m = magic();
         System.out.println("-----");
@@ -86,5 +92,20 @@ public class MagicBox {
             System.out.println();
         }
         System.out.println();
+    }
+    public static int[][] parseMagic() {
+        System.out.print("Dimensions (w,h): ");
+        Scanner in = new Scanner(System.in);
+        String[] values = in.nextLine().split(",");
+        int[][] m = new int[Integer.parseInt(values[0])][Integer.parseInt(values[1])];
+        System.out.println("Please enter the magic square(v,v,v):");
+        for (int i = 0; i < m.length; i++) {
+            String[] v = in.nextLine().split(",");
+            for (int j = 0; j < m[i].length; j++) {
+                m[i][j] = Integer.parseInt(v[j]);
+            }
+        }
+        in.close();
+        return m;
     }
 }
