@@ -1,0 +1,16 @@
+public static void main(String[] args) {
+    Tank t1 = new Tank(500, 10);
+    Tank t2 = new Tank(250, 200);
+    print(t1.getTick());
+    print(t1)
+    print(t2)
+    print("--")
+    t1.setTick(10)
+    print(t1)
+    print(t2)
+    print("--")
+    t1.takeDamage(t2.getAttack())
+    print(t1)
+    print(t2)
+    print("--")
+}

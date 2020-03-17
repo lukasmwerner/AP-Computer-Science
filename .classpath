@@ -10,4 +10,6 @@
 
     <classpathentry kind="src" path="UnitThree/programs/*.*"/>
     <classpathentry kind="src" path="UnitThree/HW/*.*"/>
+
+    <classpathentry kind="src" path="UnitFour/*.*"/>
 </classpath>
