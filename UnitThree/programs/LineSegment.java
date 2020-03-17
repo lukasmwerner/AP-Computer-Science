@@ -1,0 +1,26 @@
+public class LineSegment {
+    private Point p1;
+    private Point p2;
+;
+    public LineSegment() {
+        p1 = new Point(0,0);
+        p2 = new Point(1,1);
+    }
+    public LineSegment(Point p1, Point p2) {
+        this.p1 = p1;
+        this.p2 = p2;
+    }
+;
+    public double getSlope() {
+        double rise = p2.getY() - p1.getY();
+        double run = p2.getX() - p1.getX();
+        return rise/run;
+    }
+;
+    public double getDistance() {
+        return Math.sqrt( (p2.getX() - p1.getX())*(p2.getX() - p1.getX()) + (p2.getY() - p1.getY())*(p2.getY() - p1.getY()) );
+    }
+    public String toString() {
+        return String.format("p1: %s, p2: %s, Slope: %s, Distance: %s", p1, p2, this.getSlope(), this.getDistance());
+    }
+}

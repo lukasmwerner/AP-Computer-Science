@@ -4,7 +4,7 @@ import sys
 
 if len(sys.argv) == 2 and (".javap" in sys.argv[1] or ".jpy" in sys.argv[1]):
     fileName = sys.argv[1]
-    fileNameClean = sys.argv[1].replace(".javap", "").replace(".jpy", "")
+    fileNameClean = sys.argv[1].replace(".javap", "").replace(".jpy", "").replace(".\\", "")
 
     lines = []
 
