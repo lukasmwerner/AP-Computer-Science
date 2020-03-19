@@ -4,8 +4,6 @@ public class MagicBox {
     /* 
         Array algorithms: Traversing 2d arrays, shuffling 1d arrays, summing columns and rows in 2d arrays
     */
-
-    private static int req = 15;
     public static void main(String[] args) {
         System.out.println(isMagicBox(new int[][] {
             {7, 0, 5},
@@ -20,12 +18,13 @@ public class MagicBox {
         printMatrix(m);
     }
     public static boolean isMagicBox(int[][] box) {
+        int magicConstant = (int)( box.length * ( ( (box.length * box.length)+ 1.0) / (2.0) ) );
         for (int[] row : box) {
             int sum = 0;
             for(int item: row) {
                 sum += item;
             }
-            if (sum < 15 || sum > req) {
+            if (sum < magicConstant || sum > magicConstant) {
                 return false;
             }
         }
@@ -34,7 +33,7 @@ public class MagicBox {
             for (int i = 0; i < box.length; i++) {
                 sum += box[i][j];
             } 
-            if (sum < req || sum > req) {
+            if (sum < magicConstant || sum > magicConstant) {
                 return false;
             }      
         }
@@ -43,14 +42,14 @@ public class MagicBox {
         for (int i = 0; i < box.length; i++) {
             sum += box[i][i];
         }
-        if (sum < req || sum > req) {
+        if (sum < magicConstant || sum > magicConstant) {
             return false;
         }
         sum = 0;
         for (int i = box.length-1; i >=0; i--) {
             sum += box[i][box.length-1-i];
         }
-        if (sum < req || sum > req) {
+        if (sum < magicConstant || sum > magicConstant) {
             return false;
         }
 
