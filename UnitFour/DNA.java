@@ -3,13 +3,17 @@ public class DNA {
     public static void main(String[] args) {
         String org1 = "TCCAAACCCAGCTCTATTTTAGTGGTCATGGGTTCTGGTCCCCCCGAGCC";
         String org2 = "TCCAAACCCAGCTCTAATTAAGTGGTCAAGCGTTCTGGTCCCCCCGAGGC";
-        String org3 = "AAACCCCTCTAGTGGTCATCTGGTCCGCCGAGC";
+        //String org3 = "AAACCCCTCTAGTGGTCATCTGGTCCGCCGAGC";
         String[] sequences = new String[] {"AAACCC", "CTCTA", "CCGAGC"};
         System.out.println(norm("TCCAAACCCAGCTCTATTTTAGTGGTCATGGGTTCTGGTCCCCCCGAGCC", "TCCAAACCCAGCTCTAATTAAGTGGTCAAGCGTTCTGGTCCCCCCGAGGC"));
         System.out.println(norm("GAAT", "GAAA"));
         System.out.println(match(org1, sequences));
         System.out.println(match(org2, sequences));
         System.out.println(doubleMatch(org1, org2, sequences));
+        System.out.println();
+        String mutatedOrg1 = mutate(org1, 4);
+        System.out.println(mutatedOrg1);
+        System.out.println(norm(org1, mutatedOrg1));
     }
     public static double norm(String s, String t) {
         double diff = WagnerFisher(s, t) / (max(new int[] {s.length(), t.length()})+0.0);
@@ -61,9 +65,32 @@ public class DNA {
         return "N/A";
     }
 
+    public static String mutate(String source, int itemsToSwap) {
+        String mutated = source;
+        char[] mutatedArr = mutated.toCharArray();
+        for (int i = 0; i < itemsToSwap; i++) {
+            int positionA = (int)(Math.random()*(source.length()-1)/2)+1;
+            int positionB = source.length() - positionA;
+            mutatedArr = swap(mutatedArr, positionA, positionB);
+            
+        }
+        mutated = new String(mutatedArr);
+        return mutated;
+    }
 
+
+    // Common array helpers
     public static int min(int[] a) {
         int smallest = a[0];
+        for (int i = 0; i < a.length; i++) {
+            if (a[i] < smallest) {
+                smallest = a[i];
+            }
+        }
+        return smallest;
+    }
+    public static double min(double[] a) {
+        double smallest = a[0];
         for (int i = 0; i < a.length; i++) {
             if (a[i] < smallest) {
                 smallest = a[i];
@@ -79,5 +106,32 @@ public class DNA {
             }
         }
         return max;
+    }
+    public static double max(double[] a) {
+        double max = a[0];
+        for (int i = 0; i < a.length; i++) {
+            if (a[i] > max) {
+                max = a[i];
+            }
+        }
+        return max;
+    }
+    public static int[] swap(int[] array, int indexA, int indexB) {
+        int temp = array[indexA];
+        array[indexA] = array[indexB];
+        array[indexB] = temp;
+        return array;
+    }
+    public static double[] swap(double[] array, int indexA, int indexB) {
+        double temp = array[indexA];
+        array[indexA] = array[indexB];
+        array[indexB] = temp;
+        return array;
+    }
+    public static char[] swap(char[] array, int indexA, int indexB) {
+        char temp = array[indexA];
+        array[indexA] = array[indexB];
+        array[indexB] = temp;
+        return array;
     }
 }
