@@ -14,12 +14,16 @@ public class DNA {
         String mutatedOrg1 = mutate(org1, 4);
         System.out.println(mutatedOrg1);
         System.out.println(norm(org1, mutatedOrg1));
+        System.out.println();
+        String[] compares = {"123", "aqv", "1ab", "aac", "abb", "abc"};
+        System.out.println(Arrays.toString(mostSimilar(compares)));
+
     }
     public static double norm(String s, String t) {
-        double diff = WagnerFisher(s, t) / (max(new int[] {s.length(), t.length()})+0.0);
+        double diff = wagnerFisher(s, t) / (max(new int[] {s.length(), t.length()})+0.0);
         return 1.0-diff;
     }
-    public static int WagnerFisher(String s, String t) {
+    public static int wagnerFisher(String s, String t) {
         int m = s.length() + 1;
         int n = t.length() + 1;
         int[][] distances = new int[n][m];
@@ -78,6 +82,40 @@ public class DNA {
         return mutated;
     }
 
+    public static String[] mostSimilar(String[] items) {
+        ArrayList<WagnerFisher> matchList = new ArrayList<WagnerFisher>();
+        for (int i = 0; i < items.length; i++) {
+            ArrayList<Score> m = new ArrayList<Score>();
+            for (int j = i+1; j < items.length; j++) {
+                int v = wagnerFisher(items[i], items[j]);
+                Score asdf = new Score(items[j], v);
+                m.add( asdf );
+            }
+            for (int j = 0; j < i; j++) {
+                int v = wagnerFisher(items[i], items[j]);
+                Score asdf = new Score(items[j], v);
+                m.add( asdf );
+            }
+            Score closest = m.get(0);
+            for (int z = 1; z < m.size(); z++) {
+                if (closest.score > m.get(z).score) {
+                    closest = m.get(z);
+                }
+            }
+            matchList.add( new WagnerFisher(items[i], closest.string, closest.score) );
+        }
+        WagnerFisher closest = matchList.get(0);
+        for (int z = 1; z < matchList.size(); z++) {
+            if (closest.score > matchList.get(z).score) {
+                closest = matchList.get(z);
+            }
+        }
+        String[] clo = new String[2];
+        clo[0] = closest.source;
+        clo[1] = closest.match;
+        return clo;
+
+    }
 
     // Common array helpers
     public static int min(int[] a) {
@@ -134,4 +172,25 @@ public class DNA {
         array[indexB] = temp;
         return array;
     }
+
+    
+    private static class Score {
+        public String string;
+        public int score;
+        public Score(String string, int score) {
+            this.string = string;
+            this.score = score;
+        }
+    }
+    private static class WagnerFisher {
+        public String source;
+        public String match;
+        public int score;
+        public WagnerFisher(String s, String m, int sc) {
+            source = s;
+            match = m;
+            score = sc;       
+        }
+    }
 }
+
