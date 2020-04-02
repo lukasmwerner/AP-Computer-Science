@@ -15,8 +15,16 @@ public class DNA {
         System.out.println(mutatedOrg1);
         System.out.println(norm(org1, mutatedOrg1));
         System.out.println();
-        String[] compares = {"123", "aqv", "1ab", "aac", "abb", "abc"};
-        System.out.println(Arrays.toString(mostSimilar(compares)));
+        String[] compares = {
+            "TCCAAACCCAGCTCTATTTTAGTGGTCATGGGTTCTGGTCCCCCCGAGCC",
+            "TCCAAACCCAGCTCTAATTAAGTGGTCAAGCGTTCTGGTCCCCCCGAGGC",
+            "TCCAACCTCAGCTCTCTTTCAGTGGTCATGGGTTCTGGTACCACCGGACC",
+            "TTCAAATCCAGCTCTGTTTTAGTAGCCATGGGTTCTGGCCCCCCCGAGCC",
+            "CCCAAACCCATCTCTAGTTTCGTGGGCATGGGTTTTGGTCACCCCTAGCC"
+        };
+        String[] largeSimilar = mostSimilar(compares);
+        System.out.println(Arrays.toString(largeSimilar));
+        System.out.println(norm(largeSimilar[0], largeSimilar[1]));
 
     }
     public static double norm(String s, String t) {
