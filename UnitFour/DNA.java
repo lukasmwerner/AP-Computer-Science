@@ -28,7 +28,7 @@ public class DNA {
         System.out.println(norm(largeSimilar[0], largeSimilar[1])); // Question 4
         System.out.println(probMutate(
             new ArrayList<>(Arrays.asList('C','C','C','A','A','A','C','C','C','A','T','C','T','C','T','A','G','T','T','T','C','G','T','G','G','G','C','A','T','G','G','G','T','T','T','T','G','G','T','C','A','C','C','C','C','T','A','G','C','C')),
-             0.8));
+             0.8)); // Question 7
 
     }
     public static double norm(String s, String t) {
