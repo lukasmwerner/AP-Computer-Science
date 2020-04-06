@@ -14,7 +14,7 @@ jobs:
       with:
         fetch-depth: 1
     - name: Prettify the JS Code
-      uses: lwerner-lshigh/prettier_action_java@v1.1
+      uses: lwerner-lshigh/prettier_action_java@v1.1.1
       with:
         branch: master
       env:
