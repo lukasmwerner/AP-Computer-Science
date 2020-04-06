@@ -190,24 +190,28 @@ public class DNA {
     return distances[n - 1][m - 1];
   }
 
-  public static String doubleMatch(
+  public static ArrayList<String> doubleMatch(
     String compareToA,
     String compareToB,
     String[] sequences
   ) {
+    ArrayList<String> returns = new ArrayList<String>();
     if (match(compareToA, sequences).equals(match(compareToB, sequences))) {
-      return match(compareToA, sequences);
-    }
-    return "N/A";
-  }
-
-  public static String match(String compareTo, String[] sequences) {
-    for (String seq : sequences) {
-      if (compareTo.contains(seq)) {
-        return seq;
+      for (String str: match(compareToA, sequences)) {
+        returns.add(str);
       }
     }
-    return "N/A";
+    return returns;
+  }
+
+  public static ArrayList<String> match(String compareTo, String[] sequences) {
+    ArrayList<String> returns = new ArrayList<String>();
+    for (String seq : sequences) {
+      if (compareTo.contains(seq)) {
+        returns.add(seq);
+      }
+    }
+    return returns;
   }
 
   public static String mutate(String source, int itemsToSwap) {
