@@ -197,7 +197,7 @@ public class DNA {
   ) {
     ArrayList<String> returns = new ArrayList<String>();
     if (match(compareToA, sequences).equals(match(compareToB, sequences))) {
-      for (String str: match(compareToA, sequences)) {
+      for (String str : match(compareToA, sequences)) {
         returns.add(str);
       }
     }
