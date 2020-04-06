@@ -1,34 +1,6 @@
 import java.util.*;
 
 public class DNA {
-    public static void main(String[] args) {
-        String org1 = "TCCAAACCCAGCTCTATTTTAGTGGTCATGGGTTCTGGTCCCCCCGAGCC";
-        String org2 = "TCCAAACCCAGCTCTAATTAAGTGGTCAAGCGTTCTGGTCCCCCCGAGGC";
-        //String org3 = "AAACCCCTCTAGTGGTCATCTGGTCCGCCGAGC";
-        String[] sequences = new String[] {"AAACCC", "CTCTA", "CCGAGC"};
-        System.out.println(norm("TCCAAACCCAGCTCTATTTTAGTGGTCATGGGTTCTGGTCCCCCCGAGCC", "TCCAAACCCAGCTCTAATTAAGTGGTCAAGCGTTCTGGTCCCCCCGAGGC")); //Question 1
-        System.out.println(norm("GAAT", "GAAA")); // Question 1
-        System.out.println(match(org1, sequences)); // Question 2
-        System.out.println(match(org2, sequences)); // Question 2
-        System.out.println(doubleMatch(org1, org2, sequences));
-        System.out.println();
-        String mutatedOrg1 = mutate(org1, 4); // Question 3
-        System.out.println(mutatedOrg1);
-        System.out.println(norm(org1, mutatedOrg1)); // Question 3
-        System.out.println();
-        String[] compares = {
-            "TCCAAACCCAGCTCTATTTTAGTGGTCATGGGTTCTGGTCCCCCCGAGCC",
-            "TCCAAACCCAGCTCTAATTAAGTGGTCAAGCGTTCTGGTCCCCCCGAGGC",
-            "TCCAACCTCAGCTCTCTTTCAGTGGTCATGGGTTCTGGTACCACCGGACC",
-            "TTCAAATCCAGCTCTGTTTTAGTAGCCATGGGTTCTGGCCCCCCCGAGCC",
-            "CCCAAACCCATCTCTAGTTTCGTGGGCATGGGTTTTGGTCACCCCTAGCC"
-        };
-        String[] largeSimilar = mostSimilar(compares); // Question 4
-        System.out.println(Arrays.toString(largeSimilar)); // Question 4
-        System.out.println(norm(largeSimilar[0], largeSimilar[1])); // Question 4
-        System.out.println(probMutate(
-            new ArrayList<>(Arrays.asList('C','C','C','A','A','A','C','C','C','A','T','C','T','C','T','A','G','T','T','T','C','G','T','G','G','G','C','A','T','G','G','G','T','T','T','T','G','G','T','C','A','C','C','C','C','T','A','G','C','C')),
-             0.8)); // Question 7
 
   public static void main(String[] args) {
     String org1 = "TCCAAACCCAGCTCTATTTTAGTGGTCATGGGTTCTGGTCCCCCCGAGCC";
@@ -118,7 +90,7 @@ public class DNA {
         ),
         0.8
       )
-    );
+    ); // Question 7
   }
 
   public static double norm(String s, String t) {
