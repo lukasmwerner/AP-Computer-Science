@@ -1,4 +1,5 @@
 import java.util.*;
+
 /* 
     Items Completed | Points
     * Question 1 | 8
@@ -14,6 +15,7 @@ import java.util.*;
 */
 
 public class DNA {
+
   public static void main(String[] args) {
     String org1 = "TCCAAACCCAGCTCTATTTTAGTGGTCATGGGTTCTGGTCCCCCCGAGCC";
     String org2 = "TCCAAACCCAGCTCTAATTAAGTGGTCAAGCGTTCTGGTCCCCCCGAGGC";
