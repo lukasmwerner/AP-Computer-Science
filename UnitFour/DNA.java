@@ -1,7 +1,19 @@
 import java.util.*;
+/* 
+    Items Completed | Points
+    * Question 1 | 8
+    * Question 2 | 8
+    * Question 3 | 8
+    * Question 4 | 3
+    * Question 5 | 2
+    * Question 7 | 2
+*/
+/* TODO
+    Items planned | Points
+    * Question 8 | 2
+*/
 
 public class DNA {
-
   public static void main(String[] args) {
     String org1 = "TCCAAACCCAGCTCTATTTTAGTGGTCATGGGTTCTGGTCCCCCCGAGCC";
     String org2 = "TCCAAACCCAGCTCTAATTAAGTGGTCAAGCGTTCTGGTCCCCCCGAGGC";
