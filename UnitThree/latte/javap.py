@@ -5,10 +5,10 @@ import sys
 if len(sys.argv) == 2 and (".javap" in sys.argv[1] or ".jpy" in sys.argv[1]):
     fileName = sys.argv[1]
     fileNameClean = sys.argv[1].replace(".javap", "").replace(".jpy", "").replace(".\\", "")
-
+    className = os.path.basename(sys.argv[1])
     lines = []
 
-    print("[JAVAP COMPILER] RUNNING TRANSPILE")
+    print("[LATTE COMPILER] RUNNING TRANSPILE")
     with open(fileName, 'r') as f:
         content = f.readlines()
         for line in content:
@@ -35,7 +35,9 @@ if len(sys.argv) == 2 and (".javap" in sys.argv[1] or ".jpy" in sys.argv[1]):
     with open(fileName.replace(".javap", ".java").replace(".jpy", ".java"), 'w') as f:
         for line in lines:
             f.write(line)
-    print("[JAVAP COMPILER] RUNNING COMPILE")
+    print("[LATTE COMPILER] RUNNING COMPILE")
     os.system("javac " + fileName.replace(".javap", ".java").replace(".jpy", ".java"))
-    print("[JAVAP COMPILER] RUNNING JAVA CLASS")
+    print("[LATTE COMPILER] RUNNING JAVA CLASS")
     os.system("java " + fileName.replace(".javap", "").replace(".jpy", "").replace(".\\", ""))
+else:
+    print("[LATTE COMPILER] ERROR NO FILE PROVIDED!!!")
