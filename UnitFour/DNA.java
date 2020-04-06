@@ -91,6 +91,7 @@ public class DNA {
         0.8
       )
     ); // Question 7
+    System.out.println(norm(new ArrayList<>(Arrays.asList('A', 'B')), new ArrayList<>(Arrays.asList('A', 'B')))); // Question 5
   }
 
   public static double norm(String s, String t) {
@@ -115,7 +116,6 @@ public class DNA {
     for (int i = 1; i < m; i++) {
       distances[0][i] = i;
     }
-    //System.out.println(Arrays.deepToString(distances));
     for (int i = 1; i < n; i++) {
       for (int j = 1; j < m; j++) {
         int subCost = 0;
