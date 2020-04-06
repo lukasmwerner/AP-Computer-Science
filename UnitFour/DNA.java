@@ -91,7 +91,12 @@ public class DNA {
         0.8
       )
     ); // Question 7
-    System.out.println(norm(new ArrayList<>(Arrays.asList('A', 'B')), new ArrayList<>(Arrays.asList('A', 'B')))); // Question 5
+    System.out.println(
+      norm(
+        new ArrayList<>(Arrays.asList('A', 'B')),
+        new ArrayList<>(Arrays.asList('A', 'B'))
+      )
+    ); // Question 5
   }
 
   public static double norm(String s, String t) {
