@@ -1,4 +1,5 @@
 import java.util.*;
+
 public class DNA {
     public static void main(String[] args) {
         String org1 = "TCCAAACCCAGCTCTATTTTAGTGGTCATGGGTTCTGGTCCCCCCGAGCC";
@@ -25,10 +26,17 @@ public class DNA {
         String[] largeSimilar = mostSimilar(compares); // Question 4
         System.out.println(Arrays.toString(largeSimilar)); // Question 4
         System.out.println(norm(largeSimilar[0], largeSimilar[1])); // Question 4
-        
+        System.out.println(probMutate(
+            new ArrayList<>(Arrays.asList('C','C','C','A','A','A','C','C','C','A','T','C','T','C','T','A','G','T','T','T','C','G','T','G','G','G','C','A','T','G','G','G','T','T','T','T','G','G','T','C','A','C','C','C','C','T','A','G','C','C')),
+             0.8));
+
     }
     public static double norm(String s, String t) {
         double diff = wagnerFisher(s, t) / (max(new int[] {s.length(), t.length()})+0.0);
+        return 1.0-diff;
+    }
+    public static double norm(ArrayList<Character> s, ArrayList<Character> t) {
+        double diff = wagnerFisher(s, t) / (max(new int[] {s.size(), t.size()})+0.0);
         return 1.0-diff;
     }
     public static int wagnerFisher(String s, String t) {
@@ -60,6 +68,35 @@ public class DNA {
         }
         return distances[n-1][m-1];
     }
+    public static int wagnerFisher(ArrayList<Character> s, ArrayList<Character> t) {
+        int m = s.size() + 1;
+        int n = t.size() + 1;
+        int[][] distances = new int[n][m];
+        for (int i = 1; i < n; i++) {
+            distances[i][0] = i;
+        }
+        for (int i = 1; i < m; i++) {
+            distances[0][i] = i;
+        }
+        for (int i = 1; i < n; i++) {
+            for (int j = 1; j < m; j++) {
+                int subCost = 0;
+                if (s.get(j-1) == t.get(i-1)) {
+                    subCost = 0;
+                } else {
+                    subCost = 1;
+                }
+                int value = min(new int[] {
+                    distances[i-1][j] + 1,
+                    distances[i][j-1] + 1,
+                    distances[i-1][j-1] + subCost
+                });
+                distances[i][j] = value;
+            }
+        }
+        return distances[n-1][m-1];
+    }
+
 
     public static String doubleMatch(String compareToA, String compareToB, String[] sequences) {
         if (match(compareToA, sequences).equals(match(compareToB, sequences))) {
@@ -85,9 +122,21 @@ public class DNA {
             int positionB = source.length() - positionA;
             mutatedArr = swap(mutatedArr, positionA, positionB);
             
+            
         }
         mutated = new String(mutatedArr);
         return mutated;
+    }
+
+    public static ArrayList<Character> probMutate(ArrayList<Character> source, double percent) {
+        ArrayList<Character> spemin = new ArrayList<Character>();
+        for (Character c : source) {spemin.add(c);}
+        while (norm(source, spemin) >= percent) {
+            int positionA = (int)(Math.random()*(source.size()-1)/2)+1;
+            spemin = blarg(spemin, positionA);
+            System.out.println(norm(source, spemin));
+        }
+        return spemin;
     }
 
     public static String[] mostSimilar(String[] items) {
@@ -180,6 +229,18 @@ public class DNA {
         array[indexB] = temp;
         return array;
     }
+    public static ArrayList<Character> swap(ArrayList<Character> array, int indexA, int indexB) {
+        Character temp = array.get(indexA);
+        array.set(indexA, array.get(indexB));
+        array.set(indexB, temp);
+        return array;
+    }
+    public static ArrayList<Character> blarg(ArrayList<Character> array, int pos) {
+        Character c = array.get(pos);
+        array.remove(pos);
+        array.add(c);
+        return array;
+    }
 
     
     private static class Score {
@@ -201,4 +262,3 @@ public class DNA {
         }
     }
 }
-

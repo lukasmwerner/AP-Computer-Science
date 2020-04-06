@@ -5,45 +5,7 @@ Contains all the code from my AP Computer Sci Class
 Lukas Werner
 
 ### Project Structure
-```
-├── UnitOne
-│   ├── HW
-│   │   ├── Conditionals.java
-│   │   ├── Loops.class
-│   │   ├── Loops.java
-│   │   ├── StringMethods.class
-│   │   ├── StringMethods.java
-│   │   └── UserInputs.java
-│   ├── finalProj
-│   │   ├── Adventure.class
-│   │   └── Adventure.java
-│   └── programs
-│       ├── AddingQuiz.class
-│       ├── AddingQuiz.java
-│       ├── ClearingScreen.class
-│       ├── ClearingScreen.java
-│       ├── Conditionals.java
-│       ├── FirstLast.java
-│       ├── FlowControl.java
-│       ├── GuessMyNumber.java
-│       ├── HelloWorld.class
-│       ├── HelloWorld.java
-│       ├── Loops.class
-│       ├── Loops.java
-│       ├── MiddleLetter.java
-│       ├── NameGuess.java
-│       ├── ParrotProgram.java
-│       ├── Password.class
-│       ├── Password.java
-│       ├── RockPaperScissors.class
-│       ├── RockPaperScissors.java
-│       ├── StringMethods.class
-│       ├── StringMethods.java
-│       ├── StringMethods2.java
-│       └── TaskList.java
-├── UnitTwo
-│   └── programs
-│       └── Drawing.java
-├── notes.md
-└── scratchpaper.md
-```
+
+For every Unit there is a respective UnitXXX folder. Then there are subfolders for either projects or just a dumping ground for programs (`programs`) 
+
+The tools folder is made up of tools that I use to make java programming more bareable or more obscure. ;) 
