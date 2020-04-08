@@ -213,7 +213,7 @@ public class DNA {
   }
 
   public static ArrayList<String> match(String compareTo, String[] sequences) {
-    // Retruns sequences that are in the string that we are comparing to 
+    // Retruns sequences that are in the string that we are comparing to
     ArrayList<String> returns = new ArrayList<String>();
     for (String seq : sequences) {
       if (compareTo.contains(seq)) { // check if the sequence is in the compare to item
@@ -230,7 +230,7 @@ public class DNA {
     for (int i = 0; i < itemsToSwap; i++) {
       int positionA = (int) (Math.random() * (source.length() - 1) / 2) + 1; // pick a position in the first half of the string
       int positionB = source.length() - positionA; // pick the inverse of the first position
-      mutatedArr = swap(mutatedArr, positionA, positionB); // swap the random position 
+      mutatedArr = swap(mutatedArr, positionA, positionB); // swap the random position
     }
     mutated = new String(mutatedArr); // make it a string again so we can return the right type
     return mutated;
@@ -246,7 +246,7 @@ public class DNA {
       spemin.add(c);
     } // make a deep copy so that we don't worry about pass by reference issues
     while (norm(source, spemin) >= percent) { // while the score is larger than the desired percentage
-      int positionA = (int) (Math.random() * (source.size() - 1) / 2) + 1; // grab a random position 
+      int positionA = (int) (Math.random() * (source.size() - 1) / 2) + 1; // grab a random position
       spemin = blarg(spemin, positionA); // move it to the end of the array
       //System.out.println(norm(source, spemin)); // check how we are doing
     }
@@ -362,7 +362,7 @@ public class DNA {
   }
 
   public static char[] swap(char[] array, int indexA, int indexB) {
-    // swaps two items in an array of chars 
+    // swaps two items in an array of chars
     char temp = array[indexA];
     array[indexA] = array[indexB];
     array[indexB] = temp;
