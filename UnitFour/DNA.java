@@ -203,8 +203,8 @@ public class DNA {
   ) {
     // checks if there are common sequences between the two given strings
     ArrayList<String> returns = new ArrayList<String>();
-    ArrayList <String> compareA = match(compareToA, sequences);
-    ArrayList <String> compareB = match(compareToB, sequences);
+    ArrayList<String> compareA = match(compareToA, sequences);
+    ArrayList<String> compareB = match(compareToB, sequences);
     ArrayList<Integer> used = new ArrayList<Integer>();
     for (String string : compareA) {
       for (int i = 0; i < compareB.size(); i++) {
