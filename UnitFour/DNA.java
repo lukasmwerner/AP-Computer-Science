@@ -294,14 +294,15 @@ public class DNA {
     }
     return smallest;
   }
+
   public static int min(String[] a) {
-      String smallest = a[0];
-      for (int i = 0; i < a.length; i++) {
-          if (a[i].length() < smallest.length()) {
-              smallest = a[i];
-          }
+    String smallest = a[0];
+    for (int i = 0; i < a.length; i++) {
+      if (a[i].length() < smallest.length()) {
+        smallest = a[i];
       }
-      return smallest.length();
+    }
+    return smallest.length();
   }
 
   public static int max(int[] a) {
@@ -387,31 +388,33 @@ public class DNA {
       score = sc;
     }
   }
+
   public static ArrayList<String> cross(String seq1, String seq2) {
-    int index = min(new String[] {seq1, seq2}) / 2;
+    int index = min(new String[] { seq1, seq2 }) / 2;
     String build1 = "";
     String build2 = "";
     for (int i = 0; i < index; i++) {
-        build1 += seq1.charAt(i);
-        build2 += seq2.charAt(i);
+      build1 += seq1.charAt(i);
+      build2 += seq2.charAt(i);
     }
-    for (int i = index; i < min(new String[] {seq1, seq2}); i++) {
-        build1 += seq2.charAt(i);
-        build2 += seq1.charAt(i);
+    for (int i = index; i < min(new String[] { seq1, seq2 }); i++) {
+      build1 += seq2.charAt(i);
+      build2 += seq1.charAt(i);
     }
     // first string build complete
     return new ArrayList<String>(Arrays.asList(build1, build2));
   }
+
   public static ArrayList<String> cross(String seq1, String seq2, int index) {
     String build1 = "";
     String build2 = "";
     for (int i = 0; i < index; i++) {
-        build1 += seq1.charAt(i);
-        build2 += seq2.charAt(i);
+      build1 += seq1.charAt(i);
+      build2 += seq2.charAt(i);
     }
-    for (int i = index; i < min(new String[] {seq1, seq2}); i++) {
-        build1 += seq2.charAt(i);
-        build2 += seq1.charAt(i);
+    for (int i = index; i < min(new String[] { seq1, seq2 }); i++) {
+      build1 += seq2.charAt(i);
+      build2 += seq1.charAt(i);
     }
     // first string build complete
     return new ArrayList<String>(Arrays.asList(build1, build2));
