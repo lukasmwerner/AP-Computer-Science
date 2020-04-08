@@ -8,9 +8,6 @@ import java.util.*;
     * Question 4 | 3
     * Question 5 | 2
     * Question 7 | 2
-*/
-/* TODO
-    Items planned | Points
     * Question 8 | 2
 */
 
@@ -111,6 +108,7 @@ public class DNA {
         new ArrayList<>(Arrays.asList('A', 'B'))
       )
     ); // Question 5
+    System.out.println(cross("AAAAA", "BBBB")); // Question 8
   }
 
   public static double norm(String s, String t) {
@@ -296,6 +294,15 @@ public class DNA {
     }
     return smallest;
   }
+  public static int min(String[] a) {
+      String smallest = a[0];
+      for (int i = 0; i < a.length; i++) {
+          if (a[i].length() < smallest.length()) {
+              smallest = a[i];
+          }
+      }
+      return smallest.length();
+  }
 
   public static int max(int[] a) {
     int max = a[0];
@@ -379,5 +386,34 @@ public class DNA {
       match = m;
       score = sc;
     }
+  }
+  public static ArrayList<String> cross(String seq1, String seq2) {
+    int index = min(new String[] {seq1, seq2}) / 2;
+    String build1 = "";
+    String build2 = "";
+    for (int i = 0; i < index; i++) {
+        build1 += seq1.charAt(i);
+        build2 += seq2.charAt(i);
+    }
+    for (int i = index; i < min(new String[] {seq1, seq2}); i++) {
+        build1 += seq2.charAt(i);
+        build2 += seq1.charAt(i);
+    }
+    // first string build complete
+    return new ArrayList<String>(Arrays.asList(build1, build2));
+  }
+  public static ArrayList<String> cross(String seq1, String seq2, int index) {
+    String build1 = "";
+    String build2 = "";
+    for (int i = 0; i < index; i++) {
+        build1 += seq1.charAt(i);
+        build2 += seq2.charAt(i);
+    }
+    for (int i = index; i < min(new String[] {seq1, seq2}); i++) {
+        build1 += seq2.charAt(i);
+        build2 += seq1.charAt(i);
+    }
+    // first string build complete
+    return new ArrayList<String>(Arrays.asList(build1, build2));
   }
 }
