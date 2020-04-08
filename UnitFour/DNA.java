@@ -10,6 +10,10 @@ import java.util.*;
     * Question 7 | 2
     * Question 8 | 2
 */
+/* 
+  TODO
+  * rewrite the double match algorithm
+*/
 
 public class DNA {
 
@@ -112,18 +116,21 @@ public class DNA {
   }
 
   public static double norm(String s, String t) {
+    // converts the wagner fisher output into a percentage
     double diff =
       wagnerFisher(s, t) / (max(new int[] { s.length(), t.length() }) + 0.0);
     return 1.0 - diff;
   }
 
   public static double norm(ArrayList<Character> s, ArrayList<Character> t) {
+    // converts the wagner fisher output into a percentage
     double diff =
       wagnerFisher(s, t) / (max(new int[] { s.size(), t.size() }) + 0.0);
     return 1.0 - diff;
   }
 
   public static int wagnerFisher(String s, String t) {
+    // Implementation of the wagner fisher algorithm https://en.wikipedia.org/wiki/Levenshtein_distance
     int m = s.length() + 1;
     int n = t.length() + 1;
     int[][] distances = new int[n][m];
@@ -158,6 +165,7 @@ public class DNA {
     ArrayList<Character> s,
     ArrayList<Character> t
   ) {
+    // Implementation of the wagner fisher algorithm https://en.wikipedia.org/wiki/Levenshtein_distance
     int m = s.size() + 1;
     int n = t.size() + 1;
     int[][] distances = new int[n][m];
@@ -193,8 +201,10 @@ public class DNA {
     String compareToB,
     String[] sequences
   ) {
+    // WARNING THIS FUNCTION NEED TO BE REWRITTEN
+    // checks if there are common sequences between the two given strings
     ArrayList<String> returns = new ArrayList<String>();
-    if (match(compareToA, sequences).equals(match(compareToB, sequences))) {
+    if (match(compareToA, sequences).equals(match(compareToB, sequences))) { // check if they are the the same
       for (String str : match(compareToA, sequences)) {
         returns.add(str);
       }
@@ -203,9 +213,10 @@ public class DNA {
   }
 
   public static ArrayList<String> match(String compareTo, String[] sequences) {
+    // Retruns sequences that are in the string that we are comparing to 
     ArrayList<String> returns = new ArrayList<String>();
     for (String seq : sequences) {
-      if (compareTo.contains(seq)) {
+      if (compareTo.contains(seq)) { // check if the sequence is in the compare to item
         returns.add(seq);
       }
     }
@@ -213,14 +224,15 @@ public class DNA {
   }
 
   public static String mutate(String source, int itemsToSwap) {
+    // Takes a string and swaps items X times
     String mutated = source;
-    char[] mutatedArr = mutated.toCharArray();
+    char[] mutatedArr = mutated.toCharArray(); // convert to array for better array algorithm helpers
     for (int i = 0; i < itemsToSwap; i++) {
-      int positionA = (int) (Math.random() * (source.length() - 1) / 2) + 1;
-      int positionB = source.length() - positionA;
-      mutatedArr = swap(mutatedArr, positionA, positionB);
+      int positionA = (int) (Math.random() * (source.length() - 1) / 2) + 1; // pick a position in the first half of the string
+      int positionB = source.length() - positionA; // pick the inverse of the first position
+      mutatedArr = swap(mutatedArr, positionA, positionB); // swap the random position 
     }
-    mutated = new String(mutatedArr);
+    mutated = new String(mutatedArr); // make it a string again so we can return the right type
     return mutated;
   }
 
@@ -228,46 +240,49 @@ public class DNA {
     ArrayList<Character> source,
     double percent
   ) {
+    // mutates the given array of characters based on the percentage provided
     ArrayList<Character> spemin = new ArrayList<Character>();
     for (Character c : source) {
       spemin.add(c);
-    }
-    while (norm(source, spemin) >= percent) {
-      int positionA = (int) (Math.random() * (source.size() - 1) / 2) + 1;
-      spemin = blarg(spemin, positionA);
-      System.out.println(norm(source, spemin));
+    } // make a deep copy so that we don't worry about pass by reference issues
+    while (norm(source, spemin) >= percent) { // while the score is larger than the desired percentage
+      int positionA = (int) (Math.random() * (source.size() - 1) / 2) + 1; // grab a random position 
+      spemin = blarg(spemin, positionA); // move it to the end of the array
+      //System.out.println(norm(source, spemin)); // check how we are doing
     }
     return spemin;
   }
 
   public static String[] mostSimilar(String[] items) {
+    // returns the two most similar items given an array of strings
     ArrayList<WagnerFisher> matchList = new ArrayList<WagnerFisher>();
-    for (int i = 0; i < items.length; i++) {
-      ArrayList<Score> m = new ArrayList<Score>();
-      for (int j = i + 1; j < items.length; j++) {
-        int v = wagnerFisher(items[i], items[j]);
-        Score asdf = new Score(items[j], v);
-        m.add(asdf);
+    for (int i = 0; i < items.length; i++) { // calculate the leivenstein numbers for every string
+      ArrayList<Score> m = new ArrayList<Score>(); // creates a list of scores (target, score)
+      for (int j = i + 1; j < items.length; j++) { // check every item after the one we are currently processing
+        int v = wagnerFisher(items[i], items[j]); // calculate the leivenstein number (source, target)
+        Score asdf = new Score(items[j], v); // make a new score object to add to the list of scores
+        m.add(asdf); // add the score object to the list of scores
       }
-      for (int j = 0; j < i; j++) {
-        int v = wagnerFisher(items[i], items[j]);
-        Score asdf = new Score(items[j], v);
-        m.add(asdf);
+      for (int j = 0; j < i; j++) { // check all the items before the index we are currently processing
+        int v = wagnerFisher(items[i], items[j]); // calculate the leivenstein number (source, target)
+        Score asdf = new Score(items[j], v); // make a new score object to add to the list of scores
+        m.add(asdf); // add the score object to the list of scores
       }
-      Score closest = m.get(0);
-      for (int z = 1; z < m.size(); z++) {
-        if (closest.score > m.get(z).score) {
+      Score closest = m.get(0); // grab the first item in the list to have a basis of where we need to find the smallest number
+      for (int z = 1; z < m.size(); z++) { // iterate through every score
+        if (closest.score > m.get(z).score) { // if it is closer (smaller) then use that add that one to the closest one
           closest = m.get(z);
         }
       }
-      matchList.add(new WagnerFisher(items[i], closest.string, closest.score));
+      matchList.add(new WagnerFisher(items[i], closest.string, closest.score)); // add the smallest leivenstein number and the closest string and the source to the list of all computed items
     }
-    WagnerFisher closest = matchList.get(0);
-    for (int z = 1; z < matchList.size(); z++) {
-      if (closest.score > matchList.get(z).score) {
-        closest = matchList.get(z);
+    WagnerFisher closest = matchList.get(0); // get the first items so we have a basis of where to find the closest match
+    for (int z = 1; z < matchList.size(); z++) { // iterate through every processes string
+      if (closest.score > matchList.get(z).score) { // grab the first smallest score in the list
+        closest = matchList.get(z); // set that to the closest item
       }
     }
+    // Returning the correct data type
     String[] clo = new String[2];
     clo[0] = closest.source;
     clo[1] = closest.match;
@@ -276,6 +291,7 @@ public class DNA {
 
   // Common array helpers
   public static int min(int[] a) {
+    // returns the first smallest value of an array of doubles
     int smallest = a[0];
     for (int i = 0; i < a.length; i++) {
       if (a[i] < smallest) {
@@ -286,6 +302,7 @@ public class DNA {
   }
 
   public static double min(double[] a) {
+    // returns the first smallest value of an array of doubles
     double smallest = a[0];
     for (int i = 0; i < a.length; i++) {
       if (a[i] < smallest) {
@@ -296,6 +313,7 @@ public class DNA {
   }
 
   public static int min(String[] a) {
+    // returns the length of the smallest string given
     String smallest = a[0];
     for (int i = 0; i < a.length; i++) {
       if (a[i].length() < smallest.length()) {
@@ -306,6 +324,7 @@ public class DNA {
   }
 
   public static int max(int[] a) {
+    // returns the first largest value of an array of ints
     int max = a[0];
     for (int i = 0; i < a.length; i++) {
       if (a[i] > max) {
@@ -316,6 +335,7 @@ public class DNA {
   }
 
   public static double max(double[] a) {
+    // returns the first largest value of an array of doubles
     double max = a[0];
     for (int i = 0; i < a.length; i++) {
       if (a[i] > max) {
@@ -326,6 +346,7 @@ public class DNA {
   }
 
   public static int[] swap(int[] array, int indexA, int indexB) {
+    // swaps two items in an array of ints
     int temp = array[indexA];
     array[indexA] = array[indexB];
     array[indexB] = temp;
@@ -333,6 +354,7 @@ public class DNA {
   }
 
   public static double[] swap(double[] array, int indexA, int indexB) {
+    // swaps two items in an array of doubles
     double temp = array[indexA];
     array[indexA] = array[indexB];
     array[indexB] = temp;
@@ -340,6 +362,7 @@ public class DNA {
   }
 
   public static char[] swap(char[] array, int indexA, int indexB) {
+    // swaps two items in an array of chars 
     char temp = array[indexA];
     array[indexA] = array[indexB];
     array[indexB] = temp;
@@ -351,6 +374,7 @@ public class DNA {
     int indexA,
     int indexB
   ) {
+    // takes an Arraylist of characters and swaps two characters based on the provided indexes
     Character temp = array.get(indexA);
     array.set(indexA, array.get(indexB));
     array.set(indexB, temp);
@@ -361,6 +385,7 @@ public class DNA {
     ArrayList<Character> array,
     int pos
   ) {
+    // takes an array of characters and takes the character at a position and moves it to the back
     Character c = array.get(pos);
     array.remove(pos);
     array.add(c);
@@ -378,6 +403,7 @@ public class DNA {
   }
 
   private static class WagnerFisher {
+    // A data structure to store a string, match, and its leivenstein number in an araylist
     public String source;
     public String match;
     public int score;
@@ -390,6 +416,7 @@ public class DNA {
   }
 
   public static ArrayList<String> cross(String seq1, String seq2) {
+    // Crosses two strings in the middle and returns a list of both of them
     int index = min(new String[] { seq1, seq2 }) / 2;
     String build1 = "";
     String build2 = "";
@@ -401,11 +428,12 @@ public class DNA {
       build1 += seq2.charAt(i);
       build2 += seq1.charAt(i);
     }
-    // first string build complete
+    // strings build complete
     return new ArrayList<String>(Arrays.asList(build1, build2));
   }
 
   public static ArrayList<String> cross(String seq1, String seq2, int index) {
+    // Crosses two strings at a given index and returns a list of both of them
     String build1 = "";
     String build2 = "";
     for (int i = 0; i < index; i++) {
@@ -416,7 +444,7 @@ public class DNA {
       build1 += seq2.charAt(i);
       build2 += seq1.charAt(i);
     }
-    // first string build complete
+    // strings build complete
     return new ArrayList<String>(Arrays.asList(build1, build2));
   }
 }
