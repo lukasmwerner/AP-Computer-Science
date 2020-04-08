@@ -201,12 +201,16 @@ public class DNA {
     String compareToB,
     String[] sequences
   ) {
-    // WARNING THIS FUNCTION NEED TO BE REWRITTEN
     // checks if there are common sequences between the two given strings
     ArrayList<String> returns = new ArrayList<String>();
-    if (match(compareToA, sequences).equals(match(compareToB, sequences))) { // check if they are the the same
-      for (String str : match(compareToA, sequences)) {
-        returns.add(str);
+    ArrayList <String> compareA = match(compareToA, sequences);
+    ArrayList <String> compareB = match(compareToB, sequences);
+    ArrayList<Integer> used = new ArrayList<Integer>();
+    for (String string : compareA) {
+      for (int i = 0; i < compareB.size(); i++) {
+        if (string.equals(compareB.get(i)) && !used.contains(i)) {
+          returns.add(string);
+        }
       }
     }
     return returns;
