@@ -463,7 +463,7 @@ public class DNA {
           if (i == 0 || j == 0) {
             cache[i][j] = 1;
           } else {
-            cache[i][j] = cache[i-1][j-1] + 1;
+            cache[i][j] = cache[i - 1][j - 1] + 1;
           }
           if (cache[i][j] > longest.length()) {
             longest = a.substring(i - longest.length() + 1, i + 1);
@@ -473,6 +473,7 @@ public class DNA {
     }
     return cache;
   }
+
   public static String longestCommonSubstring(String a, String b) {
     String longest = "";
     //if (a.length() == 0 || b.length() == 0) {return longest;}
@@ -483,11 +484,11 @@ public class DNA {
           if (i == 0 || j == 0) {
             cache[i][j] = 1;
           } else {
-            cache[i][j] = cache[i-1][j-1] + 1;
+            cache[i][j] = cache[i - 1][j - 1] + 1;
           }
           if (cache[i][j] > longest.length()) {
             System.out.println(longest.length());
-            longest = a.substring(i - longest.length() , i+1);
+            longest = a.substring(i - longest.length(), i + 1);
           }
         }
       }
