@@ -9,10 +9,7 @@ import java.util.*;
     * Question 5 | 2
     * Question 7 | 2
     * Question 8 | 2
-*/
-/* 
-  TODO
-  * rewrite the double match algorithm
+    * Question 9 | 2
 */
 
 public class DNA {
