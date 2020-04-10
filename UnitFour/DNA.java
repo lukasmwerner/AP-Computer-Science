@@ -20,7 +20,7 @@ public class DNA {
   public static void main(String[] args) {
     String org1 = "TCCAAACCCAGCTCTATTTTAGTGGTCATGGGTTCTGGTCCCCCCGAGCC";
     String org2 = "TCCAAACCCAGCTCTAATTAAGTGGTCAAGCGTTCTGGTCCCCCCGAGGC";
-    //String org3 = "AAACCCCTCTAGTGGTCATCTGGTCCGCCGAGC";
+    String org3 = "AAACCCCTCTAGTGGTCATCTGGTCCGCCGAGC";
     String[] sequences = new String[] { "AAACCC", "CTCTA", "CCGAGC" };
     System.out.println(
       norm(
@@ -113,6 +113,7 @@ public class DNA {
       )
     ); // Question 5
     System.out.println(cross("AAAAA", "BBBB")); // Question 8
+    System.out.println(longestCommonSubstring(org1, org3)); // Question 9
   }
 
   public static double norm(String s, String t) {
@@ -450,5 +451,47 @@ public class DNA {
     }
     // strings build complete
     return new ArrayList<String>(Arrays.asList(build1, build2));
+  }
+
+  public static int[][] longestCommonSubstring(String a, String b, int flag) {
+    String longest = "";
+    //if (a.length() == 0 || b.length() == 0) {return longest;}
+    int[][] cache = new int[a.length()][b.length()];
+    for (int i = 0; i < a.length(); i++) {
+      for (int j = 0; j < b.length(); j++) {
+        if (a.charAt(i) == b.charAt(j)) {
+          if (i == 0 || j == 0) {
+            cache[i][j] = 1;
+          } else {
+            cache[i][j] = cache[i-1][j-1] + 1;
+          }
+          if (cache[i][j] > longest.length()) {
+            longest = a.substring(i - longest.length() + 1, i + 1);
+          }
+        }
+      }
+    }
+    return cache;
+  }
+  public static String longestCommonSubstring(String a, String b) {
+    String longest = "";
+    //if (a.length() == 0 || b.length() == 0) {return longest;}
+    int[][] cache = new int[a.length()][b.length()];
+    for (int i = 0; i < a.length(); i++) {
+      for (int j = 0; j < b.length(); j++) {
+        if (a.charAt(i) == b.charAt(j)) {
+          if (i == 0 || j == 0) {
+            cache[i][j] = 1;
+          } else {
+            cache[i][j] = cache[i-1][j-1] + 1;
+          }
+          if (cache[i][j] > longest.length()) {
+            System.out.println(longest.length());
+            longest = a.substring(i - longest.length() , i+1);
+          }
+        }
+      }
+    }
+    return longest;
   }
 }
