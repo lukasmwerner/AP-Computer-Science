@@ -1,6 +1,8 @@
 import java.awt.Color;
 import java.lang.Math;
 import java.util.Arrays;
+import java.io.File;
+import java.util.*;
 
 public class PictureEditor {
     static Color black = new Color(255, 255, 255);
@@ -8,8 +10,13 @@ public class PictureEditor {
     static Picture pic;
 
     public static void main(String[] args) {
-
-        String filename = "javapic.jpg";
+        String filename;
+        if (args.length > 0) {
+            filename = args[0];
+        } else {
+            filename = "grandCanyon.JPG";
+        }
+        
 
         pic = new Picture(filename);
         System.out.println("Warning this may take a while.");
@@ -17,7 +24,7 @@ public class PictureEditor {
 
         long startTime = System.currentTimeMillis();
 
-         SortByBrightness();
+        // SortByBrightness();
         // derezer();
         // jumble();
         // addNoise();
@@ -35,16 +42,19 @@ public class PictureEditor {
         // randomKernelRun();
         // testKernelConvo();
         // sharpen();
-        // meanBlur(5);
+        // meanBlur(1);
+        // greyScale(255);
+        // guassianBlur(5, 10);
+        guassianBlur(Integer.parseInt(args[3]), 10);
         // detectEdge();
         // border();
         // printPixelColors();
         // drawDarkerLine();
         // drawSquare(0,0,200);
-        // greyScale(50);
         // sepia();
         // ordered3x3Dither();
-        // droppedCam(10,8);
+        // guassianBlur(10, 30);
+        //guass();
         // invertPic();
         // ordered2x2Dither();
         // coloredOrdered2x2Dither();
@@ -59,7 +69,14 @@ public class PictureEditor {
             System.out.println("That took " + (endTime - startTime) / 1000 + " seconds");
         }
 
-        pic.show();
+        if (args.length > 3) {
+            pic.show();
+        }
+        if (args.length > 1) {
+            pic.save(new File(args[1])); // Save our progeess
+        } else {
+            pic.save(new File("output.png")); // Save our progeess
+        }
     }
 
     public static void printPixelColors() {
@@ -323,124 +340,114 @@ public class PictureEditor {
             }
         }
     }
-
-    public static void convolveKernel(double[] kernels) {
-        int size = kernels.length;
-        int width = pic.width();
-        int height = pic.height();
+    public static void convolveKernel(double[][] kernel) {
+        int width = pic.width() - kernel.length + 1;
+        int height = pic.height() - kernel.length + 1;
+        int size = kernel.length;
+        int part = (int)(size-1.0)/2;
         Picture editPic = new Picture(width, height);
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
-                double sum = 0;
-                double avg = 0;
-                int counter = 0;
-                for (int ox = -size; ox <= size; ox++) {
-                    for (int oy = -size; oy <= size; oy++) {
-                        try {
-                            double color = pic.get(x - Math.abs(ox), y - Math.abs(oy)).getRed();
-                            double kernel = kernels[counter];
-                            color = color * kernel;
-                            sum += color;
-                            avg += kernel;
-                            counter++;
-                        } catch (Exception e) {
-                            counter++;
-                        }
-                    }
-                }
-                int value = (int) (sum / avg);
-                modChannel(x, y, 'r', value, editPic);
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                modChannel(i, j, 'r', (int)(pixelConvolve(pic, i, j, kernel, 'r')), editPic);
             }
         }
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
-                double sum = 0;
-                double avg = 0;
-                int counter = 0;
-                for (int ox = -size; ox <= size; ox++) {
-                    for (int oy = -size; oy <= size; oy++) {
-                        try {
-                            double color = pic.get(x - Math.abs(ox), y - Math.abs(oy)).getGreen();
-                            double kernel = kernels[counter];
-                            color = color * kernel;
-                            sum += color;
-                            avg += kernel;
-                            counter++;
-                        } catch (Exception e) {
-                            counter++;
-                        }
-                    }
-                }
-                int value = (int) (sum / avg);
-                modChannel(x, y, 'g', value, editPic);
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                modChannel(i, j, 'g', (int)(pixelConvolve(pic, i, j, kernel, 'g')), editPic);
             }
         }
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
-                double sum = 0;
-                double avg = 0;
-                int counter = 0;
-                for (int ox = -size; ox <= size; ox++) {
-                    for (int oy = -size; oy <= size; oy++) {
-                        try {
-                            double color = pic.get(x - Math.abs(ox), y - Math.abs(oy)).getBlue();
-                            double kernel = kernels[counter];
-                            color = color * kernel;
-                            sum += color;
-                            avg += kernel;
-                            counter++;
-                        } catch (Exception e) {
-                            counter++;
-                        }
-                    }
-                }
-                int value = (int) (sum / avg);
-                modChannel(x, y, 'b', value, editPic);
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                modChannel(i, j, 'b', (int)(pixelConvolve(pic, i, j, kernel, 'b')), editPic);
             }
         }
         pic = editPic;
     }
 
-    public static void testKernelConvo() {
-        double[] kernel = { 0, 0, 0, 0, 1, 0, 0, 0, 0 };
-        convolveKernel(kernel);
+    public static double pixelConvolve(Picture img, int x, int y, double[][] k, char color) {
+        int kernelWidth = k[0].length;
+        int kernelHeight = k.length;
+        double ret = 0;
+        for (int i = 0; i < kernelWidth; ++i) {
+            for (int j = 0; j < kernelHeight; ++j) {
+                if (color == 'b') {
+                    ret += (img.get(x + i,y + j).getBlue() * k[i][j]);
+                } else if (color == 'g') {
+                    ret += (img.get(x + i,y + j).getGreen() * k[i][j]);
+                } else {
+                    ret += (img.get(x + i,y + j).getRed() * k[i][j]);
+                }
+                
+            }
+        }
+        return ret;
     }
 
+    public static void testKernelConvo() {
+        //double[] kernel = { 0, 0, 0, 0, 1, 0, 0, 0, 0 };
+        //convolveKernel(kernel);
+        double[][] kernel = {
+            {0,0,0},
+            {0,1,0},
+            {0,0,0}
+        };
+        convolveKernel(kernel);
+    } 
+
     public static void sharpen() {
-        double[] kernel = { 0, -1, 0, -1, 5, -1, 0, -1, 0 };
+       // double[] kernel = { 0, -1, 0, -1, 5, -1, 0, -1, 0 };
+       double[][] kernel = {
+            {0, -1, 0},
+            {-1, 5, -1},
+            {0, -1, 0}
+       };
+        convolveKernel(kernel);
+    }
+    public static void guass() {
+        double[][] kernel = {
+            {0.077847, 	0.123317, 0.077847},
+            {0.123317, 	0.195346, 0.123317},
+            {0.077847, 	0.123317, 0.077847}
+        };
         convolveKernel(kernel);
     }
 
     public static void detectEdge() {
         // int[] gX = {1,0,-1, 2, 0, -2, 1, 0, -1};
         // convolveKernel(gX);
-        double[] gY = { -1, -2, -1, 0, 0, 0, 1, 2, 1 };
+        double[][] gY = { 
+            {-1, -2, -1},
+            {0, 0, 0}, 
+            {1, 2, 1} 
+        };
         convolveKernel(gY);
     }
 
     public static void emboss() {
-        double[] kernels = { -2, -1, 0, -1, 1, 1, 0, 1, 2 };
+        double[][] kernels = { {-2, -1, 0}, {-1, 1, 1}, {0, 1, 2} };
         convolveKernel(kernels);
     }
 
     public static void intensifiedSharpen() {
-        double[] kernels = { -1, -1, -1, -1, 5, -1, -1, -1, -1 };
+        double[][] kernels = { {-1, -1, -1}, {-1, 5, -1}, {-1, -1, -1} };
         convolveKernel(kernels);
     }
 
     public static void outline() {
-        double[] kernels = { -1, -1, -1, -1, 8, -1, -1, -1, -1 };
+        double[][] kernels = { {-1, -1, -1}, {-1, 8, -1}, {-1, -1, -1} };
         convolveKernel(kernels);
     }
 
     public static void randomKernelRun() {
-        double[] kernels = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-        for (int i = 0; i <= 8; i++) {
-            int randomInt = (int) (Math.random() * 32) - 16;
-            System.out.print(randomInt + " ");
-            kernels[i] = randomInt;
-        }
-        System.out.println();
+        double[][] kernels = { {0, 0, 0}, {0, 0, 0}, {0, 0, 0} };
+        for (int i = 0; i < kernels.length; i++) {
+            for (int j = 0; j < kernels.length; j++) {
+                int randomInt =  (int) (Math.random() * 32) - 16;
+                kernels[i][j] = randomInt;
+                System.out.print(randomInt + " ");
+            }
+            System.out.println();
+        }        
         convolveKernel(kernels);
     }
 
@@ -919,28 +926,29 @@ public class PictureEditor {
         return res;
     }
 
-    public static void droppedCam(int size, double strength) {
-
+    public static void guassianBlur(int size, double strength) {
+        int pos = (int)((size-1.0)/2.0);
         int width = pic.width();
         int height = pic.height();
-        Picture editPic = new Picture(width, height);// pic;
-        double[] kernels = new double[(int) Math.pow(size, 3)];
-        int counter = 0;
-
-        // calculate kernel
-        for (int ox = -size; ox <= size; ox++) {
-            for (int oy = -size; oy <= size; oy++) {
-                kernels[counter] = calcGuassianStrength(ox, oy, strength);
-                counter++;
-            }
-        }
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
-                editPic.set(x, y, new Color(255, 255, 255));
-            }
-        }
+        double[][] kernels = new double[size][size];
+        double sum = 0;
+        int y = -pos;
+       for (int i = 0; i < kernels.length; i++) {
+           int x = -pos;
+           for (int j = 0; j < kernels.length; j++) {
+               kernels[i][j] = calcGuassianStrength(x, y, strength);
+               sum += kernels[i][j];
+               x++;
+           }
+           y++;
+       }
+       for (int i = 0; i < kernels.length; i++) {
+           for (int j = 0; j < kernels.length; j++) {
+               kernels[i][j] /= sum;
+           }
+       }
         convolveKernel(kernels);
-        pic = editPic;
+
     }
     public static void addNoise() {
         int width = pic.width();
