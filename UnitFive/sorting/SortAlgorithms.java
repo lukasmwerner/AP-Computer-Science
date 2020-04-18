@@ -102,7 +102,7 @@ public class SortAlgorithms {
   */
 
   public static int[] sort1(int[] inputArr) {
-	/* Bubble sort
+	/* Bubble sort because it looks for the largest item through each iteration and moves it as far right as possible
 	*/
 	for (int i = 0; i < inputArr.length; i++) {
 		for (int j = 0; j < inputArr.length - 1 - i; j++) {
@@ -198,3 +198,6 @@ public class SortAlgorithms {
 
 
 }
+/* Question 4
+	View the other part of the submition
+*/
