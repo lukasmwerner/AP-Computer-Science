@@ -28,6 +28,9 @@ public class SortAlgorithms {
 
   public static void main(String[] args) {
 
+	int[] sortedTest = {1,2,3,4,5,6,7,8,9,10};
+	System.out.println(isSorted(sortedTest));
+
     int[] unsortedArray = generateRandomArray(10, 1, 10);
 	System.out.println(Arrays.toString(unsortedArray));
 	long start1 = System.nanoTime();
@@ -63,7 +66,9 @@ public class SortAlgorithms {
 		arr[i] = val;
 		val++;
 	}
-	arr = shuffle(arr);
+	while (isSorted(arr) == false) {
+		arr = shuffle(arr);
+	} 
     return arr;
   }
   
@@ -80,8 +85,25 @@ public class SortAlgorithms {
 	  }
 	  return input;
   }
+  public static boolean isSorted(int[] input) {
+	  int prev = input[0];
+	  for (int i = 1; i < input.length; i++) {
+		  if (prev > input[i]) {
+				prev = input[i];
+		  } else {
+				return false;
+		  }
+	  }
+	  return true;
+  }
+
+  /*
+  	Question 3 Identify the sorting algorithm.
+  */
 
   public static int[] sort1(int[] inputArr) {
+	/* Bubble sort
+	*/
 	for (int i = 0; i < inputArr.length; i++) {
 		for (int j = 0; j < inputArr.length - 1 - i; j++) {
 			if (inputArr[j] > inputArr[j+1]) {
@@ -95,6 +117,8 @@ public class SortAlgorithms {
   }
 
   public static int[] sort2(int[] inputArr) {
+	/* Selection sort because it looks for the smallest item and moves it to the left
+	*/
 	for (int i = 0; i < inputArr.length; i++) {
 		int val = inputArr[i];
 		int valIndex = i;
@@ -111,6 +135,8 @@ public class SortAlgorithms {
   }
 
   public static int[] sort3(int[] inputArr) {
+	/* Insertion sort because it moves the given index as far as it can go.
+	*/
 	for (int i = 1; i < inputArr.length; i++) {
 		int val = inputArr[i];
 		int j = i;
@@ -124,6 +150,8 @@ public class SortAlgorithms {
   }
 
   public static int[] sort4(int[] inputArr) {
+	/* Merge sort because it is the only method to call itself in the process of sorting.
+	*/
 	if (inputArr.length == 1)
 		return inputArr;
   
