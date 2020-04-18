@@ -32,8 +32,8 @@ public class PictureEditor {
         // removeRed();
         // removeBlue();
         // removeGreen();
-        // vMirror();
-        // mirror();
+         vMirror();
+         mirror();
         // vFlip();
         // flip();
         // outline();
@@ -44,8 +44,8 @@ public class PictureEditor {
         // sharpen();
         // meanBlur(1);
         // greyScale(255);
-        // guassianBlur(5, 10);
-        guassianBlur(Integer.parseInt(args[3]), 10);
+         guassianBlur(13, 10);
+        // guassianBlur(Integer.parseInt(args[3]), Integer.parseInt(args[4]));
         // detectEdge();
         // border();
         // printPixelColors();
@@ -69,7 +69,7 @@ public class PictureEditor {
             System.out.println("That took " + (endTime - startTime) / 1000 + " seconds");
         }
 
-        if (args.length > 3) {
+        if (args.length >= 3) {
             pic.show();
         }
         if (args.length > 1) {
