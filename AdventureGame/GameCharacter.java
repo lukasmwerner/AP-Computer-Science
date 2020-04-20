@@ -1,5 +1,4 @@
 class GameCharacter {
-
   private String name;
 
   public GameCharacter(String name) {
@@ -13,5 +12,4 @@ class GameCharacter {
   public String toString() {
     return name;
   }
-
 }
