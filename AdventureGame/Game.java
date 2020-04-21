@@ -13,7 +13,6 @@ public class Game {
     l1.setNeighbors(null, null, l2, null);
     l2.setNeighbors(l1, null, null, null);
 
-
     l1.addItem(new Coin(10));
     l1.addItem(new Sword(5));
     l2.addEnemy(new Enemy("Goblin", 1, 10, new Coin(20)));
@@ -24,7 +23,7 @@ public class Game {
     while (true) {
       System.out.println("\nYou are at " + currentLoc);
       System.out.println(currentLoc.getLocText());
-      System.out.println("Your health: "+ thePlayer.health());
+      System.out.println("Your health: " + thePlayer.health());
       System.out.println("The items here are: " + currentLoc.getItemsHere());
       System.out.print("What would you like to do? ");
       String input = kb.nextLine();
@@ -60,7 +59,7 @@ public class Game {
       }
       if (currentLoc.hasEnemies()) {
         for (Enemy character : currentLoc.getEnemies()) {
-          if (character.health() > 0 ) {
+          if (character.health() > 0) {
             thePlayer.takeDamage(character.attack());
           }
         }

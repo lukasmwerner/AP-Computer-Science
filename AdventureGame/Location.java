@@ -41,9 +41,13 @@ public class Location {
     enemiesHere.add(c);
   }
 
-  public boolean hasEnemies() {return enemiesHere.size() > 0;}
+  public boolean hasEnemies() {
+    return enemiesHere.size() > 0;
+  }
 
-  public ArrayList<Enemy> getEnemies() {return enemiesHere;}
+  public ArrayList<Enemy> getEnemies() {
+    return enemiesHere;
+  }
 
   public String getLocText() {
     return locText;

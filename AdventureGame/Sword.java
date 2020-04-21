@@ -16,8 +16,10 @@ public class Sword extends Item {
   }
 
   public String toString() {
-    return getName() + " <Attack Damage: " + attackDamage+">";
+    return getName() + " <Attack Damage: " + attackDamage + ">";
   }
 
-  public double attack() {return attackDamage;}
+  public double attack() {
+    return attackDamage;
+  }
 }
