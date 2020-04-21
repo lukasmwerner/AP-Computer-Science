@@ -6,6 +6,7 @@ public class Player extends GameCharacter {
   public Player(String name) {
     super(name);
     inventory = new ArrayList<Item>();
+    setHealth(10);
   }
 
   public void addToInventory(Item i) {
@@ -18,5 +19,14 @@ public class Player extends GameCharacter {
 
   public String toString() {
     return getName() + " " + inventory;
+  }
+
+  public Sword canAttack() {
+    for (Item item : inventory) {
+      if (item.getName().contains("Sword")) {
+        return (Sword) item;
+      }
+    }
+    return null;
   }
 }

@@ -4,6 +4,7 @@ public class Location {
   /* Instance variables */
   private String locName;
   private ArrayList<Item> itemsHere;
+  private ArrayList<Enemy> enemiesHere;
   private String locText;
   private Location north;
   private Location east;
@@ -13,12 +14,14 @@ public class Location {
   /* Methods */
   public Location() {
     itemsHere = new ArrayList<Item>();
+    enemiesHere = new ArrayList<Enemy>();
     locName = "location";
     locText = "This is a location";
   }
 
   public Location(String name, String text) {
     itemsHere = new ArrayList<Item>();
+    enemiesHere = new ArrayList<Enemy>();
     locName = name;
     locText = text;
   }
@@ -34,6 +37,14 @@ public class Location {
     itemsHere.add(i);
   }
 
+  public void addEnemy(Enemy c) {
+    enemiesHere.add(c);
+  }
+
+  public boolean hasEnemies() {return enemiesHere.size() > 0;}
+
+  public ArrayList<Enemy> getEnemies() {return enemiesHere;}
+
   public String getLocText() {
     return locText;
   }
@@ -48,6 +59,10 @@ public class Location {
 			   If a match is found, remove that item from the ArrayList, and have
 				 this method return that item. */
     return null;
+  }
+
+  public void removeAllItems() {
+    itemsHere.clear();
   }
 
   public Location north() {
