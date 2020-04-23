@@ -49,6 +49,10 @@ public class Location {
     return enemiesHere;
   }
 
+  public void removeEnemy(Enemy e) {
+    enemiesHere.remove(e);
+  }
+
   public String getLocText() {
     return locText;
   }
@@ -58,10 +62,21 @@ public class Location {
   }
 
   public Item removeItem(String name) {
-    /* implment this method */
-    /* Search through the itemsHere ArrayList to find the matching name.
-			   If a match is found, remove that item from the ArrayList, and have
-				 this method return that item. */
+    /* Linear Search */
+    name = name.toLowerCase();
+    for (int i = 0; i < itemsHere.size(); i++) {
+      Item currentItem = itemsHere.get(i);
+      if (currentItem.getName().toLowerCase().contains(name)) {
+        itemsHere.remove(i);
+        return currentItem;
+      }
+    }
+    return null;
+  }
+
+  public Item removeItem(String name, int f) {
+    /* Binary Search */
+    /* prerequisite Array is sorted*/
     return null;
   }
 
@@ -87,5 +102,87 @@ public class Location {
 
   public String toString() {
     return locName;
+  }
+
+  public void render() {
+    ArrayList<String> view = new ArrayList<>();
+    for (int i = 0; i < 10; i++) {
+      String row = "";
+      for (int j = 0; j < 10; j++) {
+        row += " ";
+      }
+      view.add(row);
+    }
+    if (north() != null) {
+      String wall = "";
+      for (int i = 0; i < 10; i++) {
+        if (i != 4 && i != 5 && i != 6) {
+          wall += "*";
+        } else {
+          wall += " ";
+        }
+      }
+      view.set(0, wall);
+    } else {
+      String wall = "";
+      for (int i = 0; i < 10; i++) {
+        wall += "*";
+      }
+      view.set(0, wall);
+    }
+    if (south() != null) {
+      String wall = "";
+      for (int i = 0; i < 10; i++) {
+        if (i != 4 && i != 5 && i != 6) {
+          wall += "*";
+        } else {
+          wall += " ";
+        }
+      }
+      view.set(9, wall);
+    } else {
+      String wall = "";
+      for (int i = 0; i < 10; i++) {
+        wall += "*";
+      }
+      view.set(9, wall);
+    }
+    if (west() != null) {
+      for (int i = 0; i < view.size(); i++) {
+        String alter = view.get(i);
+        if (i != 4 && i != 5 && i != 6) {
+          alter = "*" + alter.substring(1);
+        } else {
+          alter = " " + alter.substring(1);
+        }
+        view.set(i, alter);
+      }
+    } else {
+      for (int i = 0; i < view.size(); i++) {
+        String alter = view.get(i);
+        alter = "*" + alter.substring(1);
+        view.set(i, alter);
+      }
+    }
+    if (east() != null) {
+      for (int i = 0; i < view.size(); i++) {
+        String alter = view.get(i);
+        if (i != 4 && i != 5 && i != 6) {
+          alter = alter.substring(0, alter.length()-2) + "*";
+        } else {
+          alter = alter.substring(0, alter.length()-2) + " ";
+        }
+        view.set(i, alter);
+      }
+    } else {
+      for (int i = 0; i < view.size(); i++) {
+        String alter = view.get(i);
+        alter = alter.substring(0, alter.length()-2) + "*";
+        view.set(i, alter);
+      }
+    }
+    for (String string : view) {
+      System.out.println(string);
+    }
   }
 }
