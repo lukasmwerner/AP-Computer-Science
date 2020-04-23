@@ -21,7 +21,6 @@ public class Player extends GameCharacter {
     return getName() + " " + inventory;
   }
 
-
   private boolean hasSword() {
     for (Item item : inventory) {
       if (item.type.equals("sword")) {

@@ -33,7 +33,10 @@ public class Enemy extends GameCharacter {
   public double attack() {
     return dpa;
   }
-  public Item drops() {return drops;}
+
+  public Item drops() {
+    return drops;
+  }
 
   @Override
   public String toString() {

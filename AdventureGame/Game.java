@@ -8,7 +8,10 @@ public class Game {
 
     Location l1 = new Location("loc1", "This is the first room you enter");
     Location l2 = new Location("loc2", "This is the second room you enter");
-    Location l3 = new Location("Cave", "There are many loots & enemies here beware.");
+    Location l3 = new Location(
+      "Cave",
+      "There are many loots & enemies here beware."
+    );
     Location l4 = new Location("Treasure Room", "Here be all the loots.");
     Location currentLoc = l1;
 
@@ -22,10 +25,10 @@ public class Game {
     l2.addEnemy(new Enemy("Goblin", 1, 10, new Coin(20)));
 
     for (int i = 0; i < 10; i++) {
-      l3.addEnemy( new Enemy("Goblin "+i, 1, 10) );
+      l3.addEnemy(new Enemy("Goblin " + i, 1, 10));
     }
     for (int i = 0; i < 10; i++) {
-      l4.addItem( new Coin( (int)(Math.random() * 100) + 1 ) );
+      l4.addItem(new Coin((int) (Math.random() * 100) + 1));
     }
     l4.addItem(new Sword("The Paper Cut", 15));
 
@@ -38,9 +41,8 @@ public class Game {
       System.out.println("Your health: " + thePlayer.health());
       System.out.println("The items here are: " + currentLoc.getItemsHere());
       if (currentLoc.hasEnemies()) {
-        System.out.println("The enemes here are: "+ currentLoc.getEnemies());
+        System.out.println("The enemes here are: " + currentLoc.getEnemies());
       }
-
 
       System.out.print("What would you like to do? ");
       String input = kb.nextLine();
@@ -86,11 +88,12 @@ public class Game {
           thePlayer.addToInventory(item);
         }
         currentLoc.removeAllItems();
-      }
-      else if (input.contains("get")) {
+      } else if (input.contains("get")) {
         String searchQuery = input.replace("get ", "");
         Item wants = currentLoc.removeItem(searchQuery);
-        if (wants != null) {thePlayer.addToInventory(wants);}
+        if (wants != null) {
+          thePlayer.addToInventory(wants);
+        }
       }
       if (input.equals("inventory")) {
         System.out.println("Inventory: " + thePlayer.getInventory());

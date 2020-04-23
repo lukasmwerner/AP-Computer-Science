@@ -168,16 +168,16 @@ public class Location {
       for (int i = 0; i < view.size(); i++) {
         String alter = view.get(i);
         if (i != 4 && i != 5 && i != 6) {
-          alter = alter.substring(0, alter.length()-2) + "*";
+          alter = alter.substring(0, alter.length() - 2) + "*";
         } else {
-          alter = alter.substring(0, alter.length()-2) + " ";
+          alter = alter.substring(0, alter.length() - 2) + " ";
         }
         view.set(i, alter);
       }
     } else {
       for (int i = 0; i < view.size(); i++) {
         String alter = view.get(i);
-        alter = alter.substring(0, alter.length()-2) + "*";
+        alter = alter.substring(0, alter.length() - 2) + "*";
         view.set(i, alter);
       }
     }
