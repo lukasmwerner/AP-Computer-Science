@@ -41,6 +41,6 @@ public class Enemy extends GameCharacter {
   @Override
   public String toString() {
     // TODO Auto-generated method stub
-    return super.toString() + " " + health();
+    return super.toString() + " <Health: " + health() + ">";
   }
 }

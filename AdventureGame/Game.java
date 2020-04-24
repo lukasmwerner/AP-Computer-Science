@@ -6,20 +6,20 @@ public class Game {
   public static void main(String[] args) {
     Player thePlayer = new Player("some name");
 
+    Location devLocation = new Location("Dev room", "For testing");
     Location l1 = new Location("loc1", "This is the first room you enter");
     Location l2 = new Location("loc2", "This is the second room you enter");
-    Location l3 = new Location(
-      "Cave",
-      "There are many loots & enemies here beware."
-    );
+    Location l3 = new Location("Cave", "There are many loots & enemies here beware.");
     Location l4 = new Location("Treasure Room", "Here be all the loots.");
     Location currentLoc = l1;
 
-    l1.setNeighbors(null, null, l2, null);
+    devLocation.setNeighbors(null, null, l1, null);
+    l1.setNeighbors(devLocation, null, l2, null);
     l2.setNeighbors(l1, l3, null, null);
     l3.setNeighbors(null, null, l4, l2);
     l4.setNeighbors(l3, null, null, null);
 
+    devLocation.addItem(new Sword("Javac Sword", 100));
     l1.addItem(new Coin(10));
     l1.addItem(new Sword(5));
     l2.addEnemy(new Enemy("Goblin", 1, 10, new Coin(20)));
@@ -67,16 +67,12 @@ public class Game {
       }
       if (input.equals("attack") && thePlayer.canAttack() != null) {
         if (currentLoc.hasEnemies()) {
-          for (Enemy character : currentLoc.getEnemies()) {
+          for (int i = 0; i < currentLoc.getEnemies().size(); i++) {
+            Enemy character = currentLoc.getEnemies().get(i);
             if (character.health() - thePlayer.canAttack().attack() <= 0) {
-              if (currentLoc.getEnemies().size() == 1) {
-                currentLoc.removeEnemy(character);
-                thePlayer.addToInventory(character.drops());
-                break;
-              } else {
-                currentLoc.removeEnemy(character);
-                thePlayer.addToInventory(character.drops());
-              }
+              if (character.drops() != null) {thePlayer.addToInventory(character.drops());}
+              currentLoc.removeEnemy(i);
+              i--;
             } else {
               character.takeDamage(thePlayer.canAttack().attack());
             }
