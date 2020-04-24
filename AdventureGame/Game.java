@@ -9,7 +9,10 @@ public class Game {
     Location devLocation = new Location("Dev room", "For testing");
     Location l1 = new Location("loc1", "This is the first room you enter");
     Location l2 = new Location("loc2", "This is the second room you enter");
-    Location l3 = new Location("Cave", "There are many loots & enemies here beware.");
+    Location l3 = new Location(
+      "Cave",
+      "There are many loots & enemies here beware."
+    );
     Location l4 = new Location("Treasure Room", "Here be all the loots.");
     Location currentLoc = l1;
 
@@ -70,7 +73,9 @@ public class Game {
           for (int i = 0; i < currentLoc.getEnemies().size(); i++) {
             Enemy character = currentLoc.getEnemies().get(i);
             if (character.health() - thePlayer.canAttack().attack() <= 0) {
-              if (character.drops() != null) {thePlayer.addToInventory(character.drops());}
+              if (character.drops() != null) {
+                thePlayer.addToInventory(character.drops());
+              }
               currentLoc.removeEnemy(i);
               i--;
             } else {

@@ -190,12 +190,21 @@ public class Location {
       }
     }
     if (hasEnemies()) {
-      view.set(2, view.get(2).substring(0,2) + "E" + view.get(2).substring(2,view.get(2).length()));
+      view.set(
+        2,
+        view.get(2).substring(0, 2) +
+        "E" +
+        view.get(2).substring(2, view.get(2).length())
+      );
     }
     if (hasLoot()) {
-      view.set(3, view.get(3).substring(0, 1) + "@" + view.get(3).substring(2, view.get(3).length()));
+      view.set(
+        3,
+        view.get(3).substring(0, 1) +
+        "@" +
+        view.get(3).substring(2, view.get(3).length())
+      );
     }
-
 
     for (String string : view) {
       System.out.println(string);
