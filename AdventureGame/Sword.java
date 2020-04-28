@@ -2,22 +2,24 @@ public class Sword extends Item {
   private double attackDamage;
 
   public Sword() {
-    super("Generic Sword");
+    super("Generic Sword", "sword");
   }
 
   public Sword(double attackDamage) {
-    super("Generic Sword");
+    super("Generic Sword", "sword");
     this.attackDamage = attackDamage;
   }
 
   public Sword(String name, double attackDamage) {
-    super(name);
+    super(name, "sword");
     this.attackDamage = attackDamage;
   }
 
   public String toString() {
-    return getName() + " <Attack Damage: " + attackDamage+">";
+    return getName() + " <Attack Damage: " + attackDamage + ">";
   }
 
-  public double attack() {return attackDamage;}
+  public double attack() {
+    return attackDamage;
+  }
 }

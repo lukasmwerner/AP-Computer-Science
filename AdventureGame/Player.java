@@ -6,7 +6,7 @@ public class Player extends GameCharacter {
   public Player(String name) {
     super(name);
     inventory = new ArrayList<Item>();
-    setHealth(10);
+    setHealth(20);
   }
 
   public void addToInventory(Item i) {
@@ -21,12 +21,32 @@ public class Player extends GameCharacter {
     return getName() + " " + inventory;
   }
 
-  public Sword canAttack() {
+  private boolean hasSword() {
     for (Item item : inventory) {
-      if (item.getName().contains("Sword")) {
-        return (Sword) item;
+      if (item.type.equals("sword")) {
+        return true;
       }
     }
-    return null;
+    return false;
+  }
+
+  public Sword canAttack() {
+    if (hasSword()) {
+      ArrayList<Sword> swords = new ArrayList<>();
+      for (Item item : inventory) {
+        if (item.type.equals("sword")) {
+          swords.add((Sword) item);
+        }
+      }
+      Sword bestSword = swords.get(0);
+      for (int i = 1; i < swords.size(); i++) {
+        if (bestSword.attack() < swords.get(i).attack()) {
+          bestSword = swords.get(i);
+        }
+      }
+      return bestSword;
+    } else {
+      return null;
+    }
   }
 }

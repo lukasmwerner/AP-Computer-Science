@@ -12,4 +12,5 @@
     <classpathentry kind="src" path="UnitThree/HW/*.*"/>
 
     <classpathentry kind="src" path="UnitFour/*.*"/>
+    <classpathentry kind="src" path="AdventureGame/*.*"/>
 </classpath>
