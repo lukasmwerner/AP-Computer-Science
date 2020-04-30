@@ -37,7 +37,7 @@ public class CheckDigit {
 
   public static int getDigit(int num, int n) {
     String dString = num + "";
-    n = n -1;
+    n = n - 1;
     return Integer.parseInt(dString.charAt(n) + "");
   }
 
