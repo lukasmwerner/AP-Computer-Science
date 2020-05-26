@@ -6,7 +6,7 @@ public class Game {
   public static void main(String[] args) {
     Player thePlayer = new Player("some name");
 
-    Location devLocation = new Location("Dev room", "For testing");
+    Location devLocation = new Location("Dev room", "This room is only for testing.!");
     Location l1 = new Location("loc1", "This is the first room you enter");
     Location l2 = new Location("loc2", "This is the second room you enter");
     Location l3 = new Location(
