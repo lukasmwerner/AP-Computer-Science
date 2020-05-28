@@ -125,16 +125,18 @@ class Asteroid extends CollidingObject {
 
   public Asteroid() {
     super();
-    int red = 255;//(int) (Math.random() * 255);
-    int green = 0;//(int) (Math.random() * 255);
-    int blue = 0;//(int) (Math.random() * 255);
+    int red = 255; //(int) (Math.random() * 255);
+    int green = 0; //(int) (Math.random() * 255);
+    int blue = 0; //(int) (Math.random() * 255);
     color = new Color(red, green, blue);
   }
 
   @Override
   public void collide(CollidingObject other) {
-    double distance = Math.sqrt( Math.pow((other.x - this.x), 2)+ Math.pow((other.y - this.y), 2) );
-    double sumOfRadiusis = (this.diameter/2.0 + other.diameter/2.0);
+    double distance = Math.sqrt(
+      Math.pow((other.x - this.x), 2) + Math.pow((other.y - this.y), 2)
+    );
+    double sumOfRadiusis = (this.diameter / 2.0 + other.diameter / 2.0);
     if (distance == sumOfRadiusis) { // Touching
       this.speed = 0;
       this.diameter = 0;
@@ -148,7 +150,6 @@ class Asteroid extends CollidingObject {
       return;
     }
   }
-
 }
 
 class Planet extends CollidingObject {
