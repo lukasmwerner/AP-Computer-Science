@@ -125,9 +125,9 @@ class Asteroid extends CollidingObject {
 
   public Asteroid() {
     super();
-    int red = 255;//(int) (Math.random() * 255);
-    int green = 0;//(int) (Math.random() * 255);
-    int blue = 0;//(int) (Math.random() * 255);
+    int red = (int) (Math.random() * 255);
+    int green = (int) (Math.random() * 255);
+    int blue = (int) (Math.random() * 255);
     color = new Color(red, green, blue);
   }
 
