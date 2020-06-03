@@ -1,9 +1,8 @@
 import java.awt.*;
-import javax.swing.*;
 import java.util.*;
+import javax.swing.*;
 
 public class Starfield extends JPanel {
-
   ArrayList<SpaceObject> spaceObjects = new ArrayList<SpaceObject>();
   static final int FIELD_WIDTH = 500;
   static final int FIELD_HEIGHT = 500;
@@ -16,32 +15,32 @@ public class Starfield extends JPanel {
   static final int ANIMATION_DELAY = 1; // in milliseconds
 
   public static void main(String[] args) {
-
     JFrame window = new JFrame("Starfield");
     window.setSize(FIELD_WIDTH, FIELD_HEIGHT);
     window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     Starfield field = new Starfield();
 
-    for (int i = 0; i < NUM_STARS - MOVING_STARS; i++)
-      field.spaceObjects.add(new Star());
+    for (int i = 0; i < NUM_STARS - MOVING_STARS; i++) field.spaceObjects.add(
+      new Star()
+    );
 
-    for (int i = 0; i < MOVING_STARS; i++)
-      field.spaceObjects.add(new MovingStar());
+    for (int i = 0; i < MOVING_STARS; i++) field.spaceObjects.add(
+      new MovingStar()
+    );
 
-    for (int i = 0; i < NUM_ASTEROIDS; i++)
-      field.spaceObjects.add(new Asteroid());
+    for (int i = 0; i < NUM_ASTEROIDS; i++) field.spaceObjects.add(
+      new Asteroid()
+    );
 
-    for (int i = 0; i < NUM_PLANETS; i++)
-      field.spaceObjects.add(new Planet());
+    for (int i = 0; i < NUM_PLANETS; i++) field.spaceObjects.add(new Planet());
 
     window.add(field);
     window.setVisible(true);
 
     while (true) {
       for (SpaceObject star : field.spaceObjects) {
-        if (star instanceof MovingObject)
-          ((MovingObject) star).move();
+        if (star instanceof MovingObject) ((MovingObject) star).move();
         if (star instanceof Asteroid) {
           for (SpaceObject rock : field.spaceObjects) {
             if (rock instanceof CollidingObject && rock != star) {
@@ -53,16 +52,13 @@ public class Starfield extends JPanel {
 
       try {
         Thread.sleep(ANIMATION_DELAY);
-      } catch (Exception e) {
-      }
+      } catch (Exception e) {}
 
       field.repaint();
     }
-
   }
 
   public void paint(Graphics g) {
-
     setOpaque(true);
     setBackground(Color.BLACK);
     super.paintComponent(g);
@@ -72,11 +68,9 @@ public class Starfield extends JPanel {
       g.fillOval((int) star.x, star.y, star.diameter, star.diameter);
     }
   }
-
 }
 
 abstract class SpaceObject {
-
   double x;
   int y;
   int diameter;
@@ -89,11 +83,9 @@ abstract class SpaceObject {
     int brightness = (int) (Math.random() * 255);
     color = new Color(brightness, brightness, brightness);
   }
-
 }
 
 abstract class MovingObject extends SpaceObject {
-
   double speed;
 
   public MovingObject() {
@@ -111,12 +103,14 @@ abstract class MovingObject extends SpaceObject {
 }
 
 class Star extends SpaceObject {
+
   public Star() {
     super();
   }
 }
 
 class MovingStar extends MovingObject {
+
   public MovingStar() {
     super();
   }
@@ -124,8 +118,7 @@ class MovingStar extends MovingObject {
 
 abstract class CollidingObject extends MovingObject {
 
-  public void collide(CollidingObject other) {
-  }
+  public void collide(CollidingObject other) {}
 }
 
 class Asteroid extends CollidingObject {
@@ -140,34 +133,36 @@ class Asteroid extends CollidingObject {
 
   @Override
   public void collide(CollidingObject other) {
-    double distance = Math.sqrt( (other.x - (this.x))*(other.x - this.x) + (other.y - this.y)*(other.y - this.y) );
-    double sumOfRadiusis = (this.diameter/2.0 + other.diameter/2.0);
-    if (distance == sumOfRadiusis) {
+    double distance = Math.sqrt(
+      Math.pow((other.x - this.x), 2) + Math.pow((other.y - this.y), 2)
+    );
+    double sumOfRadiusis = (this.diameter / 2.0 + other.diameter / 2.0);
+    if (distance == sumOfRadiusis) { // Touching
       this.speed = 0;
       this.diameter = 0;
       this.x = -1000;
       return;
     }
-    if (distance <= sumOfRadiusis) {
+    if (distance <= sumOfRadiusis) { // Hitting
       this.speed = 0;
       this.diameter = 0;
       this.x = -1000;
       return;
     }
   }
-
 }
 
 class Planet extends CollidingObject {
 
   public Planet() {
     super();
-    diameter = (int) (Math.random() * 2 * Starfield.MAX_DIAMETER) + Starfield.MAX_DIAMETER;
+    diameter =
+      (int) (Math.random() * 2 * Starfield.MAX_DIAMETER) +
+      Starfield.MAX_DIAMETER;
     int red = (int) (Math.random() * 255);
     int green = (int) (Math.random() * 255);
     int blue = (int) (Math.random() * 255);
     color = new Color(red, green, blue);
     speed = 0;
   }
-
 }
